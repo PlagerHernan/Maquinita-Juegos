@@ -57,6 +57,6 @@ public class GameManager : MonoBehaviour
         Func<bool> PauseToCredits() => () => Credits;
         Func<bool> CreditsToPause() => () => !Credits;
     }
-
+    
     private void Update() => _stateMachine.Tick();
 }
