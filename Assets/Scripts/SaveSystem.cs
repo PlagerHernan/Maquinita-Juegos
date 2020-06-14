@@ -5,26 +5,66 @@ using System.IO;
 
 public class SaveSystem : MonoBehaviour
 {
-    string filePath;
-    string jsonString;
+    string _userFilePath;
+    string _gameSettingsFilePath;
+
+    string _userJsonString;
+    string _gameSettingsJsonString;
     User _user;
 
     public User GetJson()
     {
-        filePath = Application.dataPath + "/User.json";
-        jsonString = File.ReadAllText(filePath);
-        _user = JsonUtility.FromJson<User>(jsonString);
+        _userFilePath = Application.dataPath + "/User.json";
+        _userJsonString = File.ReadAllText(_userFilePath);
+        _user = JsonUtility.FromJson<User>(_userJsonString);
         
         return _user;
     }
-
-    private void SetJson()
+    public GameSettings GetGameSettings()
     {
-        _user.currentLevel = 2;
-        _user.experiencePoints = 8.5f;
+        _gameSettingsFilePath = Application.dataPath + "/GameSettings.json";
 
-        jsonString = JsonUtility.ToJson(_user);
-        File.WriteAllText(filePath, jsonString);
+        if (!File.Exists(_gameSettingsFilePath))
+            CreateAndInitialiseGameSettings(_gameSettingsFilePath, GetDefaultSettings());
+        
+        _gameSettingsJsonString = File.ReadAllText(_gameSettingsFilePath);
+        var gameSettings = JsonUtility.FromJson<GameSettings>(_gameSettingsJsonString);
+
+        return gameSettings;
+    }
+
+    public void SetJson(User user)
+    {
+        //_user.currentLevel = 2;
+        //_user.experiencePoints = 8.5f;
+        _user = user;
+        _userJsonString = JsonUtility.ToJson(user);
+        File.WriteAllText(_userFilePath, _userJsonString);
+    }
+
+    public void SetGameSettings(GameSettings gameSettings)
+    {
+        _gameSettingsJsonString = JsonUtility.ToJson(gameSettings);
+        File.WriteAllText(_gameSettingsFilePath, _gameSettingsJsonString);
+    }
+
+    //=================== PRIVATE METHODS ========================
+    private void CreateAndInitialiseGameSettings(string path, GameSettings initialGameSettings)
+    {
+        if (File.Exists(path)) return;
+        File.Create(path).Dispose();
+
+        _gameSettingsJsonString = JsonUtility.ToJson(initialGameSettings);
+
+        File.WriteAllText(path, _gameSettingsJsonString);
+    }
+    private GameSettings GetDefaultSettings()
+    {
+        var gS = new GameSettings();
+        gS.musicOn = true;
+        gS.soundFXOn = true;
+
+        return gS;
     }
 }
 
@@ -39,4 +79,11 @@ public class User
     {
         return " Nombre: " + name + " - Nivel: " + currentLevel + "\n Puntos de experiencia: " + experiencePoints;
     }
+}
+
+[System.Serializable]
+public struct GameSettings
+{
+    public bool musicOn;
+    public bool soundFXOn;
 }

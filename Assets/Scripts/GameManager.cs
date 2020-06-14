@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     bool _lastSoundState;
     SoundManager _soundManager;
 
+    SaveSystem _saveSystem;
+    GameSettings _gameSettings;
+
     public bool MusicOff { get => !_musicState; set => _musicState = !value; }
     public bool SoundOff { get => !_soundState; set => _soundState = !value; }
 
@@ -33,14 +36,17 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _soundManager = FindObjectOfType<SoundManager>();
-        _lastMusicState = _musicState;
-        _lastSoundState = _soundState;
+        _saveSystem = FindObjectOfType<SaveSystem>();
 
-        EventsManager.SubscribeToEvent("GP_MAIN_MENU", LoadMenuScene);
-        EventsManager.SubscribeToEvent("GP_PAUSE", Pause);
-        EventsManager.SubscribeToEvent("GP_RESUME", Resume);
+        SubscribeMethodsToEventsManager();
     }
 
+    private void Start()
+    {
+        LoadSettings();
+        _lastMusicState = _musicState;
+        _lastSoundState = _soundState;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && _pauseScreen != null)
@@ -48,32 +54,46 @@ public class GameManager : MonoBehaviour
             EventsManager.TriggerEvent("GP_PAUSE");
         }
 
-        if(_musicState != _lastMusicState)
+        if (_musicState != _lastMusicState)
         {
             _lastMusicState = _musicState;
-            SetMusicState(_musicState);
+            SetMusicState();
         }
-        if(_soundState != _lastSoundState)
+        if (_soundState != _lastSoundState)
         {
             _lastSoundState = _soundState;
-            SetSFXState(_soundState);
+            SetSFXState();
         }
     }
 
     //=============== PRIVATE METHDOS =======================
-    private void SetMusicState(bool state)
+    private void SubscribeMethodsToEventsManager()
     {
-        if (_soundManager == null) return;
-
-        if (state) _soundManager.SetMusicVolume(1);
-        else _soundManager.SetMusicVolume(0);
+        EventsManager.SubscribeToEvent("GP_MAIN_MENU", LoadMenuScene);
+        EventsManager.SubscribeToEvent("GP_PAUSE", Pause);
+        EventsManager.SubscribeToEvent("GP_RESUME", Resume);
+        EventsManager.SubscribeToEvent("GP_RESUME", SaveSettings);
     }
-    private void SetSFXState(bool state)
+    private void SetMusicState()
+    {
+        Debug.Log(_musicState);
+        if (_soundManager == null) return;
+
+        if (_musicState) _soundManager.SetMusicVolume(1);
+        else _soundManager.SetMusicVolume(0);
+
+        _gameSettings.musicOn = _musicState;
+
+        Debug.Log(_musicState + " | " + _lastMusicState);
+    }
+    private void SetSFXState()
     {
         if (_soundManager == null) return;
 
-        if (state) _soundManager.SetSFXVolume(1);
+        if (_soundState) _soundManager.SetSFXVolume(1);
         else _soundManager.SetSFXVolume(0);
+
+        _gameSettings.soundFXOn = _soundState;
     }
 
     //=============== ONCLICK EVENTS ========================
@@ -113,5 +133,23 @@ public class GameManager : MonoBehaviour
     {
         _inGame.SetActive(true);
         _pauseScreen.SetActive(false);
+    }
+
+    public void LoadSettings()
+    {
+        _gameSettings = _saveSystem.GetGameSettings();
+
+        _musicState = _gameSettings.musicOn;
+        _soundState = _gameSettings.soundFXOn;
+
+        SetMusicState();
+        SetSFXState();
+    }
+    public void SaveSettings()
+    {
+        var oldGameSettings = _saveSystem.GetGameSettings();
+
+        if(!oldGameSettings.Equals(_gameSettings))
+            _saveSystem.SetGameSettings(_gameSettings);
     }
 }
