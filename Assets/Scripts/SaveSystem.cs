@@ -9,25 +9,18 @@ public class SaveSystem : MonoBehaviour
     string jsonString;
     User _user;
 
-    private void Awake() 
+    public User GetJson()
     {
         filePath = Application.dataPath + "/User.json";
-        GetJson();
-        SetJson();
-        GetJson();
-    }
-
-    private void GetJson()
-    {
         jsonString = File.ReadAllText(filePath);
         _user = JsonUtility.FromJson<User>(jsonString);
-
-        print(_user);
+        
+        return _user;
     }
 
     private void SetJson()
     {
-        _user.level = 2;
+        _user.currentLevel = 2;
         _user.experiencePoints = 8.5f;
 
         jsonString = JsonUtility.ToJson(_user);
@@ -38,12 +31,12 @@ public class SaveSystem : MonoBehaviour
 [System.Serializable]
 public class User
 {
-    public string userName;
-    public int level;
+    public string name;
+    public int currentLevel;
     public float experiencePoints;
 
     public override string ToString()
     {
-        return " Nombre: " + userName + " - Nivel: " + level + "\n Puntos de experiencia: " + experiencePoints;
+        return " Nombre: " + name + " - Nivel: " + currentLevel + "\n Puntos de experiencia: " + experiencePoints;
     }
 }
