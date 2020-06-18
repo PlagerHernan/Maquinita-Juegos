@@ -10,7 +10,6 @@ public class SaveSystem : MonoBehaviour
 
     string _userJsonString;
     string _gameSettingsJsonString;
-    User _user;
 
     #region Json Getters
 
@@ -19,7 +18,7 @@ public class SaveSystem : MonoBehaviour
     {
         _userFilePath = Application.dataPath + "/User.json";
         _userJsonString = File.ReadAllText(_userFilePath);
-        _user = JsonUtility.FromJson<User>(_userJsonString);
+        User _user = JsonUtility.FromJson<User>(_userJsonString);
         
         return _user;
     }
@@ -58,7 +57,7 @@ public class SaveSystem : MonoBehaviour
     {
         //_user.currentLevel = 2;
         //_user.experiencePoints = 8.5f;
-        _user = user;
+        //_user = user;
         _userJsonString = JsonUtility.ToJson(user);
         File.WriteAllText(_userFilePath, _userJsonString);
     }
@@ -85,7 +84,7 @@ public class SaveSystem : MonoBehaviour
 }
 
 [System.Serializable]
-public class User
+public struct User
 {
     public string name;
     public int currentLevel;

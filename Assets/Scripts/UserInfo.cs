@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEditor;
 
 public class UserInfo : MonoBehaviour
 {
@@ -11,11 +11,14 @@ public class UserInfo : MonoBehaviour
 
     private void Awake() 
     {
-        _saveSystem = new SaveSystem();
+        _saveSystem = FindObjectOfType<SaveSystem>();
         _user = _saveSystem.GetJson();
-        //GetComponent<Text>().text = _user.currentLevel.ToString();
+        
+        //print(_user);
 
         Text[] children = GetComponentsInChildren<Text>();
-        children[0].text = "test: " + _user.name;
+        children[0].text = "Nombre: " + _user.name;
+        children[1].text = "Puntos: " + _user.experiencePoints.ToString();
+        children[2].text = "Nivel: " + _user.currentLevel.ToString();
     }
 }
