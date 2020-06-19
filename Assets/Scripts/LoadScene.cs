@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class LoadScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    //llamado desde Level Button y Back to Menu Button 
+    public void ChangeScene(string targetLevel)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SceneManager.LoadScene(targetLevel);
     }
 }
