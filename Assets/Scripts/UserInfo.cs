@@ -13,8 +13,6 @@ public class UserInfo : MonoBehaviour
     {
         _saveSystem = FindObjectOfType<SaveSystem>();
         _user = _saveSystem.GetJson();
-        
-        //print(_user);
 
         Text[] children = GetComponentsInChildren<Text>();
         children[0].text = "Nombre: " + _user.name;
