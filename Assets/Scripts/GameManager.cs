@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _inGame;
     [Header("Pause Settings")]
     [SerializeField] GameObject _pauseScreen;
+    [Header("Level complete Settings")]
+    [SerializeField] GameObject _levelCompleteScreen;
     [Header("Menu Scene")]
     [SerializeField] int _menuSceneIndex;
     [Header("Sound Settings")]
@@ -70,6 +72,10 @@ public class GameManager : MonoBehaviour
         {
             EventsManager.TriggerEvent("GP_PAUSE");
         }
+        if (Input.GetKeyDown(KeyCode.Space) && _levelCompleteScreen != null)
+        {
+            EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
+        }
 
         if (_musicState != _lastMusicState)
         {
@@ -92,6 +98,8 @@ public class GameManager : MonoBehaviour
         EventsManager.SubscribeToEvent("GP_PAUSE", Pause);
         EventsManager.SubscribeToEvent("GP_RESUME", Resume);
         EventsManager.SubscribeToEvent("GP_RESUME", SaveSettings);
+        EventsManager.SubscribeToEvent("GP_RESTART", Restart);
+        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
     }
 
     //Setea el estado de la música, tanto el volumen como las variables del mismo script
@@ -137,6 +145,11 @@ public class GameManager : MonoBehaviour
         ClickSound();
         EventsManager.TriggerEvent("GP_RESUME");
     }
+    public void OnClickRestart()
+    {
+        ClickSound();
+        EventsManager.TriggerEvent("GP_RESTART");
+    }
 
     public void ClickSound() => SFXPlayer.instance.PlaySound("s_click");
 
@@ -147,17 +160,21 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(_menuSceneIndex);
     }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void Pause()
     {
-        _pauseScreen.SetActive(true);
-        _inGame.SetActive(false);
+        _pauseScreen?.SetActive(true);
+        _inGame?.SetActive(false);
     }
 
     public void Resume()
     {
-        _inGame.SetActive(true);
-        _pauseScreen.SetActive(false);
+        _inGame?.SetActive(true);
+        _pauseScreen?.SetActive(false);
     }
 
     public void LoadSettings()
@@ -175,6 +192,13 @@ public class GameManager : MonoBehaviour
         var oldGameSettings = _saveSystem.GetGameSettings();
 
         if(!oldGameSettings.Equals(_gameSettings))
-            _saveSystem.SetGameSettings(_gameSettings);
+            _saveSystem?.SetGameSettings(_gameSettings);
+    }
+
+    public void LevelCompleteScreen()
+    {
+        _levelCompleteScreen?.SetActive(true);
+        _inGame?.SetActive(false);
+        _pauseScreen?.SetActive(false);
     }
 }
