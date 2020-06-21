@@ -17,13 +17,22 @@ public class SaveSystem : MonoBehaviour
     public User GetJson()
     {
         _userFilePath = Application.dataPath + "/User.json";
+
+        //si el archivo no existe, crea uno nuevo con valores por defecto
+        if (!File.Exists(_userFilePath))
+        {
+            File.Create(_userFilePath).Dispose();
+            _userJsonString = JsonUtility.ToJson(GetDefaultUser());
+            File.WriteAllText(_userFilePath, _userJsonString);
+        }
+
         _userJsonString = File.ReadAllText(_userFilePath);
         User _user = JsonUtility.FromJson<User>(_userJsonString);
         
         return _user;
     }
 
-    //Metodo para escribir el JSON de configuraciones de juego
+    //Metodo para obtener el JSON de configuraciones de juego
     public GameSettings GetGameSettings()
     {
         // Seteo el path del archivo
@@ -72,6 +81,16 @@ public class SaveSystem : MonoBehaviour
 
     //=================== PRIVATE METHODS ========================
 
+    //Metodo que devuelve un GameSettings con las variables por default
+    private User GetDefaultUser()
+    {
+        var user = new User();
+        user.name = "Pepe";
+        user.currentLevel = 01;
+        user.experiencePoints = 0f;
+
+        return user;
+    }
     //Metodo que devuelve un GameSettings con las variables por default
     private GameSettings GetDefaultSettings()
     {
