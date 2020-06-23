@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameSimulator : MonoBehaviour
 {
+    #region Variables
+    
     SaveSystem _saveSystem;
     User _user;
     [SerializeField] int _level;
@@ -12,40 +14,52 @@ public class GameSimulator : MonoBehaviour
     Toggle _toggle;
     GameObject _toggleCheck;
 
+    #endregion
+
     private void Awake() 
     {
-        _slider = GetComponentInChildren<Slider>();
-        _toggle = GetComponentInChildren<Toggle>();
-        _toggleCheck = _toggle.transform.GetChild(0).gameObject;
+        #region Inicialización de variables 
 
         _saveSystem = FindObjectOfType<SaveSystem>();
         _user = _saveSystem.GetJson();
 
+        _slider = GetComponentInChildren<Slider>();
+        _toggle = GetComponentInChildren<Toggle>();
+        _toggleCheck = _toggle.transform.GetChild(0).gameObject;
+
+        #endregion
+
         _slider.value = _user.experiencePoints;
 
-        //si ya completó el nivel, la casilla estará marcada. Si no, estará desmarcada 
+        //si ya completó el nivel, no aparece el check (sólo texto)
         if (_user.currentLevel > _level)
         {
-            //_toggle.isOn = true;
             _toggleCheck.SetActive(false);
         }
         else
         {
-            _toggle.isOn = false;
             _toggleCheck.SetActive(true);
         }
     }
 
-    //llamado desde Back to Menu Button
+
+    //si se cierra la aplicación en medio del juego
+    private void OnApplicationQuit() 
+    {
+        SaveInfo();
+    }
+
+    //llamado desde Back to Menu Button o OnApplicationQuit()
     public void SaveInfo()
     {
         _user.experiencePoints = _slider.value;
 
-        //
+        //si no había completado el nivel y lo acaba de completar, suma un nivel
         if (_user.currentLevel <= _level && _toggle.isOn)
         {
             _user.currentLevel = _level + 1;
         }
+        
         _saveSystem.SetJson(_user);
     }
 }
