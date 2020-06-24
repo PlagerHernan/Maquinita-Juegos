@@ -18,6 +18,7 @@ public class DDOL : MonoBehaviour
 		{
 			Destroy (gameObject);
 		}
+		
 		//no se destruye al cambiar de escena
 		DontDestroyOnLoad (this);
 	}

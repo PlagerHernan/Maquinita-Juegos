@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Menus : MonoBehaviour
 {
+    AudioSource _audioSource;
+
     private void Awake() 
     {
+        /* _audioSource = GetComponent<AudioSource>();
+
+        //empieza mostrando sólo el menú principal
         GameObject[] _menus = GameObject.FindGameObjectsWithTag("Menu");
         foreach (GameObject menu in _menus)
         {
@@ -17,6 +22,6 @@ public class Menus : MonoBehaviour
             {
                 menu.SetActive(false);
             }
-        }
+        } */
     }
 }
