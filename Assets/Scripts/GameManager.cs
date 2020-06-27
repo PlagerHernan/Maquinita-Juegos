@@ -7,16 +7,9 @@ public class GameManager : MonoBehaviour
 {
     #region Declaracion de variables
 
-    //Variables seteables desdeel inspector. OJO, se recomienda hacerlo por FindObjectsOfType para evitar problemas de NullReference.
-
     //--Header es un atributo que imprime un encabezado en el inspector (ver inspector)
     //--SerializeField hace que una variable privada sea visible desde el inspector. Esto es para evitar utilizar variables públicas.
-    [Header("InGame Settings")]
-    [SerializeField] GameObject _inGame;
-    [Header("Pause Settings")]
-    [SerializeField] GameObject _pauseScreen;
-    [Header("Level complete Settings")]
-    [SerializeField] GameObject _levelCompleteScreen;
+    
     [Header("Menu Scene")]
     [SerializeField] int _menuSceneIndex;
     [Header("Sound Settings")]
@@ -24,19 +17,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool _soundState = true;
 
     //Variables privadas, no son visibles desde el inspector
-    bool _lastMusicState;
-    bool _lastSoundState;
+    private bool _lastMusicState;
+    private bool _lastSoundState;
+
+    private bool _isLastScene;
+
     SoundManager _soundManager;
     SaveSystem _saveSystem;
     GameSettings _gameSettings;
+    #endregion
 
-    //Propiedades, encapsula variables privadas. Estas propiedades en específico son accedidas por los botones de música y sonido.
+    #region Propiedades
+    //Propiedades, encapsula variables privadas.
+
+    //Estas propiedades en específico son accedidas por los botones de música y sonido.
     //Estan negadas porque cuando el boton esta tachado, setea la variable a true.
     public bool MusicOff { get => !_musicState; set => _musicState = !value; }
     public bool SoundOff { get => !_soundState; set => _soundState = !value; }
+    public bool IsLastScene { get => _isLastScene; }
 
-    //bool _returnToMenu = false;
-    //public bool ReturnToMenu { get ; set; }
     #endregion
 
     #region Metodos de Unity
@@ -61,6 +60,10 @@ public class GameManager : MonoBehaviour
     //Metodo de Unity que se ejecuta una sola vez antes del primer Update
     private void Start()
     {
+        //La expresion que se encuentra a la derecha de la asignación es una comparación.
+        //Compara si la escena actual es la última. Si la es, da true, sino da false.
+        _isLastScene = SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1;
+
         LoadSettings();
         _lastMusicState = _musicState;
         _lastSoundState = _soundState;
@@ -68,11 +71,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && _pauseScreen != null)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             EventsManager.TriggerEvent("GP_PAUSE");
         }
-        if (Input.GetKeyDown(KeyCode.Space) && _levelCompleteScreen != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
         }
@@ -90,31 +93,29 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    //=============== PRIVATE METHDOS =======================
+    #region Metodos privados
+    //=============== PRIVATE METHODS =======================
+
     //Este metodo subscribe los metodos al manejador de eventos.
     private void SubscribeMethodsToEventsManager()
     {
         EventsManager.SubscribeToEvent("GP_MAIN_MENU", LoadMenuScene);
-        EventsManager.SubscribeToEvent("GP_PAUSE", Pause);
-        EventsManager.SubscribeToEvent("GP_RESUME", Resume);
         EventsManager.SubscribeToEvent("GP_RESUME", SaveSettings);
         EventsManager.SubscribeToEvent("GP_RESTART", Restart);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+        EventsManager.SubscribeToEvent("GP_NEXT_LEVEL", LoadNextScene);
     }
 
     //Setea el estado de la música, tanto el volumen como las variables del mismo script
     private void SetMusicState()
     {
-        Debug.Log(_musicState);
         if (_soundManager == null) return;
 
         if (_musicState) _soundManager.SetMusicVolume(1);
         else _soundManager.SetMusicVolume(0);
 
         _gameSettings.musicOn = _musicState;
-
-        Debug.Log(_musicState + " | " + _lastMusicState);
     }
+
     //Setea el estado del sonido, tanto el volumen como las variables del mismo script
     private void SetSFXState()
     {
@@ -126,8 +127,10 @@ public class GameManager : MonoBehaviour
         _gameSettings.soundFXOn = _soundState;
     }
 
-    //=============== ONCLICK EVENTS ========================
+    #endregion
 
+    #region Eventos OnClick
+    //=============== ONCLICK EVENTS ========================
     //Metodos destinados a botones
 
     public void OnClickMainMenu()
@@ -150,33 +153,38 @@ public class GameManager : MonoBehaviour
         ClickSound();
         EventsManager.TriggerEvent("GP_RESTART");
     }
+    public void OnClickNextLevel()
+    {
+        ClickSound();
+        EventsManager.TriggerEvent("GP_NEXT_LEVEL");
+    }
 
     public void ClickSound() => SFXPlayer.instance.PlaySound("s_click");
+    #endregion
 
+    #region Métodos en EventsManager
     //========= EVENTS HANDLED BY EVENTSMANAGER ============
-
     //Metodos que se cargaran al manejador de eventos.
     public void LoadMenuScene()
     {
         SceneManager.LoadScene(_menuSceneIndex);
     }
+    public void LoadNextScene()
+    {
+        if (!_isLastScene)
+        {
+            int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            SceneManager.LoadScene(nextIndex);
+        }
+        else
+        {
+            Debug.Log("Este es el <color = red>último</color> nivel");
+        }
+    }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    public void Pause()
-    {
-        _pauseScreen?.SetActive(true);
-        _inGame?.SetActive(false);
-    }
-
-    public void Resume()
-    {
-        _inGame?.SetActive(true);
-        _pauseScreen?.SetActive(false);
-    }
-
     public void LoadSettings()
     {
         _gameSettings = _saveSystem.GetGameSettings();
@@ -194,11 +202,5 @@ public class GameManager : MonoBehaviour
         if(!oldGameSettings.Equals(_gameSettings))
             _saveSystem?.SetGameSettings(_gameSettings);
     }
-
-    public void LevelCompleteScreen()
-    {
-        _levelCompleteScreen?.SetActive(true);
-        _inGame?.SetActive(false);
-        _pauseScreen?.SetActive(false);
-    }
+    #endregion
 }
