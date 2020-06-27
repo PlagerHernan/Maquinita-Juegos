@@ -6,9 +6,9 @@ public class Menus : MonoBehaviour
 {
     AudioSource _audioSource;
 
-    private void Awake() 
+    /* private void Awake() 
     {
-        /* _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
 
         //empieza mostrando sólo el menú principal
         GameObject[] _menus = GameObject.FindGameObjectsWithTag("Menu");
@@ -22,6 +22,6 @@ public class Menus : MonoBehaviour
             {
                 menu.SetActive(false);
             }
-        } */
-    }
+        } 
+    } */
 }

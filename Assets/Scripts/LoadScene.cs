@@ -12,7 +12,7 @@ public class LoadScene : MonoBehaviour
     private void Awake()
     {
         _saveSystem = FindObjectOfType<SaveSystem>();
-        _user = _saveSystem.GetJson();
+        _user = _saveSystem.GetUser();
     }
 
     //llamado desde Level Button y Back to Menu Button 

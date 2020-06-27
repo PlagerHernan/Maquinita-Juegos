@@ -12,7 +12,7 @@ public class UserInfo : MonoBehaviour
     private void Awake() 
     {
         _saveSystem = FindObjectOfType<SaveSystem>();
-        _user = _saveSystem.GetJson();
+        _user = _saveSystem.GetUser();
 
         Text[] children = GetComponentsInChildren<Text>();
         children[0].text = "Nombre: " + _user.name;

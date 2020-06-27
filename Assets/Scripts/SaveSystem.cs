@@ -14,7 +14,7 @@ public class SaveSystem : MonoBehaviour
     #region Json Getters
 
     //Metodo para obtener el JSON de usuario
-    public User GetJson()
+    public User GetUser()
     {
         _userFilePath = Application.dataPath + "/User.json";
 
@@ -62,11 +62,8 @@ public class SaveSystem : MonoBehaviour
     #region Json Setters
 
     //Metodo para escribir el JSON de usuario
-    public void SetJson(User user)
+    public void SetUser(User user)
     {
-        //_user.currentLevel = 2;
-        //_user.experiencePoints = 8.5f;
-        //_user = user;
         _userJsonString = JsonUtility.ToJson(user);
         File.WriteAllText(_userFilePath, _userJsonString);
     }
@@ -81,7 +78,7 @@ public class SaveSystem : MonoBehaviour
 
     //=================== PRIVATE METHODS ========================
 
-    //Metodo que devuelve un GameSettings con las variables por default
+    //Metodo que devuelve un User con las variables por default
     private User GetDefaultUser()
     {
         var user = new User();

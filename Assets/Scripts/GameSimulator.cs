@@ -21,7 +21,7 @@ public class GameSimulator : MonoBehaviour
         #region Inicialización de variables 
 
         _saveSystem = FindObjectOfType<SaveSystem>();
-        _user = _saveSystem.GetJson();
+        _user = _saveSystem.GetUser();
 
         _slider = GetComponentInChildren<Slider>();
         _toggle = GetComponentInChildren<Toggle>();
@@ -60,6 +60,6 @@ public class GameSimulator : MonoBehaviour
             _user.currentLevel = _level + 1;
         }
         
-        _saveSystem.SetJson(_user);
+        _saveSystem.SetUser(_user);
     }
 }
