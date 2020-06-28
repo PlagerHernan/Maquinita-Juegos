@@ -5,9 +5,10 @@ using UnityEngine;
 public class ScoreHandler : MonoBehaviour
 {
     GameManager _gameManager;
-    float _expPoints = 0;
+    float _expPoints, _initialExpPoints = 0;
 
-    public float ExpPoints { get => _expPoints; set => _expPoints = value; }
+    public float ExpPoints { get => _expPoints; }
+    public float InitialExpPoints { get => _initialExpPoints; }
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class ScoreHandler : MonoBehaviour
     {
         if(_gameManager != null)
         {
-            _expPoints = _gameManager.ExperiencePoints;
+            _expPoints = _initialExpPoints = _gameManager.ExperiencePoints;
         }
     }
 
