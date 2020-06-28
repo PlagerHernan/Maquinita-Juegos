@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -22,9 +20,13 @@ public class GameManager : MonoBehaviour
 
     private bool _isLastScene;
 
+    private float _baseTime;
+    private float _gameTime;
+
     SoundManager _soundManager;
     SaveSystem _saveSystem;
     GameSettings _gameSettings;
+    User _user;
     #endregion
 
     #region Propiedades
@@ -34,7 +36,9 @@ public class GameManager : MonoBehaviour
     //Estan negadas porque cuando el boton esta tachado, setea la variable a true.
     public bool MusicOff { get => !_musicState; set => _musicState = !value; }
     public bool SoundOff { get => !_soundState; set => _soundState = !value; }
+    public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
     public bool IsLastScene { get => _isLastScene; }
+    public float GameTime { get => _gameTime; }
 
     #endregion
 
@@ -55,6 +59,9 @@ public class GameManager : MonoBehaviour
         _saveSystem = FindObjectOfType<SaveSystem>();
 
         SubscribeMethodsToEventsManager();
+
+        //Obtiene los datos de usuario
+        _user = _saveSystem.GetUser();
     }
 
     //Metodo de Unity que se ejecuta una sola vez antes del primer Update
@@ -64,9 +71,13 @@ public class GameManager : MonoBehaviour
         //Compara si la escena actual es la última. Si la es, da true, sino da false.
         _isLastScene = SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1;
 
+        //Obtiene las configuraciones mismas de juego y setea las opciones de juego.
         LoadSettings();
+
         _lastMusicState = _musicState;
         _lastSoundState = _soundState;
+
+        _baseTime = Time.time;
     }
 
     private void Update()
@@ -90,12 +101,12 @@ public class GameManager : MonoBehaviour
             _lastSoundState = _soundState;
             SetSFXState();
         }
+
+        RefreshGameTime();
     }
     #endregion
 
-    #region Metodos privados
-    //=============== PRIVATE METHODS =======================
-
+    #region Subscripcion de eventos
     //Este metodo subscribe los metodos al manejador de eventos.
     private void SubscribeMethodsToEventsManager()
     {
@@ -103,7 +114,12 @@ public class GameManager : MonoBehaviour
         EventsManager.SubscribeToEvent("GP_RESUME", SaveSettings);
         EventsManager.SubscribeToEvent("GP_RESTART", Restart);
         EventsManager.SubscribeToEvent("GP_NEXT_LEVEL", LoadNextScene);
+        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserData);
     }
+    #endregion
+
+    #region Metodos privados
+    //=============== PRIVATE METHODS =======================
 
     //Setea el estado de la música, tanto el volumen como las variables del mismo script
     private void SetMusicState()
@@ -126,6 +142,8 @@ public class GameManager : MonoBehaviour
 
         _gameSettings.soundFXOn = _soundState;
     }
+
+    private void RefreshGameTime() => _gameTime = Time.time - _baseTime;
 
     #endregion
 
@@ -201,6 +219,13 @@ public class GameManager : MonoBehaviour
 
         if(!oldGameSettings.Equals(_gameSettings))
             _saveSystem?.SetGameSettings(_gameSettings);
+    }
+    public void SaveUserData()
+    {
+        var oldUserData = _saveSystem.GetUser();
+
+        if (!oldUserData.Equals(_user))
+            _saveSystem?.SetUser(_user);
     }
     #endregion
 }
