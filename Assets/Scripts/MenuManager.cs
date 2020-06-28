@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] SaveSystem _saveSystem;
-    [SerializeField] GameSettings _gameSettings;
-    public SaveSystem SaveSystem { get => _saveSystem; set => _saveSystem = value; }
-    public GameSettings GameSettings { get => _gameSettings; set => _gameSettings = value; }
+    SaveSystem _saveSystem;
+    GameSettings _gameSettings;
+    [SerializeField] bool _musicState = true;
+    [SerializeField] bool _soundState = true;
+    
+    public bool MusicOff { get => !_musicState; set => _musicState = !value; }
+    public bool SoundOff { get => !_soundState; set => _soundState = !value; } 
 
     protected void Awake() 
     {
         _saveSystem = FindObjectOfType<SaveSystem>();
 		_gameSettings = _saveSystem.GetGameSettings(); 
+        LoadSettingsInfo();
     }
 
-    /* [SerializeField] bool _musicState = true;
-    [SerializeField] bool _soundState = true;
+    void LoadSettingsInfo()
+    {
+        _musicState = _gameSettings.musicOn;
+        _soundState = _gameSettings.soundFXOn;
+    }
 
-    public bool MusicOff { get => !_musicState; set => _musicState = !value; }
-    public bool SoundOff { get => !_soundState; set => _soundState = !value; } */
+    public void SaveSettingsInfo()
+    {
+        _gameSettings.musicOn = _musicState;
+        _gameSettings.soundFXOn = _soundState;
+		_saveSystem.SetGameSettings(_gameSettings); 
+    }
+
+    
 }

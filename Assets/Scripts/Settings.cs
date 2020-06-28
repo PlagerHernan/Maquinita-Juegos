@@ -20,19 +20,16 @@ public class Settings : MonoBehaviour
 
         #endregion
 
-        _musicToggle.isOn = _menuManager.GameSettings.musicOn;
-        _soundToggle.isOn = _menuManager.GameSettings.soundFXOn;
+        _musicToggle.isOn = _menuManager.MusicOff;
+        _soundToggle.isOn = _menuManager.SoundOff;
     }
 
-	//llamado desde Back Button 
-	public void SaveSettingsInfo()
+	public void SetMusic()
     {
-		/* _gameSettings.musicOn = _musicToggle.isOn;
-		_gameSettings.soundFXOn = _soundToggle.isOn;
+		_menuManager.MusicOff = _musicToggle.isOn;
+		_menuManager.SoundOff = _soundToggle.isOn;
 
 		print("Musica: " + _musicToggle.isOn);
 		print("Sonido: " + _soundToggle.isOn);
-
-		_saveSystem.SetGameSettings(_gameSettings); */
     }
 }

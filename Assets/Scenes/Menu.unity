@@ -541,6 +541,8 @@ MonoBehaviour:
   _gameSettings:
     musicOn: 0
     soundFXOn: 0
+  _musicState: 1
+  _soundState: 1
 --- !u!1 &352836180
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,7 +2721,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 824610585}
-        m_MethodName: SaveSettingsInfo
+        m_MethodName: SetMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
