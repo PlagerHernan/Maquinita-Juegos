@@ -6,7 +6,7 @@ public class Menus : MonoBehaviour
 {
     AudioSource _audioSource;
 
-    /* private void Awake() 
+    private void Awake() 
     {
         _audioSource = GetComponent<AudioSource>();
 
@@ -23,5 +23,5 @@ public class Menus : MonoBehaviour
                 menu.SetActive(false);
             }
         } 
-    } */
+    }
 }
