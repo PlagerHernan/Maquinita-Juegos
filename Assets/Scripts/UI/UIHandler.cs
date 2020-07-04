@@ -41,7 +41,8 @@ public class UIHandler : MonoBehaviour
     #endregion
 
     #region Métodos en EventsManager
-
+    
+    //Metodos que activan o desactivan paneles.
     public void PauseScreen()
     {
         if (_pauseScreen != null && _inGameScreen != null)

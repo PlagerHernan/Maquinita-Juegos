@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Reproductor de musica. El SoundManager debe estar en escena para que funcione.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class MusicPlayer : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class MusicPlayer : MonoBehaviour
 
     void Awake()
     {
+        //DDOL
         if (instance == null)
         {
             instance = this;
@@ -24,6 +28,10 @@ public class MusicPlayer : MonoBehaviour
         _src = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// Cambia la musica del juego
+    /// </summary>
+    /// <param name="audio">Clip de musica a reproducir</param>
     public void ChangeMusic(AudioClip audio)
     {
         if (_src == null) return;
@@ -32,6 +40,10 @@ public class MusicPlayer : MonoBehaviour
         _src.Play();
     }
 
+    /// <summary>
+    /// Cambia la música del juego
+    /// </summary>
+    /// <param name="audioName">Nombre de un clip de musica que se encuentra en la carpeta de recursos</param>
     public void ChangeMusic(string audioName)
     {
         if (_src == null || _soundManager == null) return;
