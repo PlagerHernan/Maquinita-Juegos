@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Manager
 {
     #region Declaracion de variables
 
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         _soundManager = FindObjectOfType<SoundManager>();
         _saveSystem = FindObjectOfType<SaveSystem>();
 
+        //Suscribe los eventos al manejador de eventos
         SubscribeMethodsToEventsManager();
 
         //Obtiene los datos de usuario
@@ -124,25 +125,32 @@ public class GameManager : MonoBehaviour
     //Setea el estado de la música, tanto el volumen como las variables del mismo script
     private void SetMusicState()
     {
+        //Si no tiene referencia al SoundManager, no ejecuta el resto
         if (_soundManager == null) return;
 
+        //Si el estado de la música es true, se setea el volumen del mismo a 1. Sino se setea a 0.
         if (_musicState) _soundManager.SetMusicVolume(1);
         else _soundManager.SetMusicVolume(0);
 
+        //Se actualiza el estado de la música
         _gameSettings.musicOn = _musicState;
     }
 
     //Setea el estado del sonido, tanto el volumen como las variables del mismo script
     private void SetSFXState()
     {
+        //Si no tiene referencia al SoundManager, no ejecuta el resto
         if (_soundManager == null) return;
 
+        //Si el estado del sonido es true, se setea el volumen del mismo a 1. Sino se setea a 0.
         if (_soundState) _soundManager.SetSFXVolume(1);
         else _soundManager.SetSFXVolume(0);
 
+        //Se actualiza el estado del sonido
         _gameSettings.soundFXOn = _soundState;
     }
 
+    //Actualiza el tiempo de juego
     private void RefreshGameTime() => _gameTime = Time.time - _baseTime;
 
     #endregion
@@ -183,10 +191,14 @@ public class GameManager : MonoBehaviour
     #region Métodos en EventsManager
     //========= EVENTS HANDLED BY EVENTSMANAGER ============
     //Metodos que se cargaran al manejador de eventos.
+
+    //Carga la escena de menú
     public void LoadMenuScene()
     {
         SceneManager.LoadScene(_menuSceneIndex);
     }
+
+    //Carga la siguiente escena
     public void LoadNextScene()
     {
         if (!_isLastScene)
@@ -199,10 +211,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Este es el <color = red>último</color> nivel");
         }
     }
+
+    //Recarga la escena actual
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    //Carga los settings de juego del Json
     public void LoadSettings()
     {
         _gameSettings = _saveSystem.GetGameSettings();
@@ -213,6 +229,8 @@ public class GameManager : MonoBehaviour
         SetMusicState();
         SetSFXState();
     }
+
+    //Guarda los settings de juego al Json
     public void SaveSettings()
     {
         var oldGameSettings = _saveSystem.GetGameSettings();
@@ -220,6 +238,8 @@ public class GameManager : MonoBehaviour
         if(!oldGameSettings.Equals(_gameSettings))
             _saveSystem?.SetGameSettings(_gameSettings);
     }
+
+    //Guarda información de usuario en el JSON
     public void SaveUserData()
     {
         var oldUserData = _saveSystem.GetUser();

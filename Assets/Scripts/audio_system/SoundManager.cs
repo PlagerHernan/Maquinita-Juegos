@@ -31,6 +31,10 @@ public class SoundManager : MonoBehaviour
         //SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 0.75f));
     }
 
+    /// <summary>
+    /// Setea un snapshot según el índice.
+    /// </summary>
+    /// <param name="select"></param>
     public void SetAudioSnapshot(int select)
     {
         if (snapshots.Count <= 0)
@@ -49,6 +53,7 @@ public class SoundManager : MonoBehaviour
             
     }
 
+    //Carga los clips que se encuentran en la carpeta de recursos
     Dictionary<string, AudioClip> LoadSoundsFromStorage(string pathInResources)
     {
         AudioClip[] tempAudios = Resources.LoadAll<AudioClip>(pathInResources);
@@ -62,6 +67,11 @@ public class SoundManager : MonoBehaviour
         return tempDictionary;
     }
 
+    /// <summary>
+    /// Devuelve un clip de audio correspondiente al nombre.
+    /// </summary>
+    /// <param name="sound"></param>
+    /// <returns></returns>
     public AudioClip GetSound(string sound)
     {
         string[] soundSelection = sound.Split('_');
@@ -72,17 +82,29 @@ public class SoundManager : MonoBehaviour
             return _soundList[sound];
     }
 
+    /// <summary>
+    /// Reproduce un sonido al hacer click.
+    /// </summary>
+    /// <param name="name"></param>
     public void ClickSound(string name)
     {
         src.PlayOneShot(GetSound(name));
     }
 
+    /// <summary>
+    /// Setea el volumen del sonido del juego.
+    /// </summary>
+    /// <param name="val">Valor numerico entre 0.001 y 1. Si está por fuera lo clampea.</param>
     public void SetSFXVolume(float val)
     {
         val = Mathf.Clamp(val, 0.001f, 1);
         mixer.SetFloat("sfxVol", Mathf.Log(val) * 20);
         //PlayerPrefs.SetFloat("SFXVolume", val);
     }
+    /// <summary>
+    /// Setea el volumen de la música del juego.
+    /// </summary>
+    /// <param name="val">Valor numerico entre 0.001 y 1. Si está por fuera lo clampea.</param>
     public void SetMusicVolume(float val)
     {
         val = Mathf.Clamp(val, 0.001f, 1);

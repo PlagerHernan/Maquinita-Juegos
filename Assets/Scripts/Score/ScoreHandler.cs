@@ -32,6 +32,7 @@ public class ScoreHandler : MonoBehaviour
         //  2- Valor que se asigna si la condicion da true (el 0 que está del lado izquierdo del ":")
         //  3- Valor que se asigna si la condicion da false (la "p" que está del lado derecho del ":")
 
+        //Actualiza los puntos de experiencia.
         _expPoints += p;
         _gameManager.ExperiencePoints = _expPoints;
     }

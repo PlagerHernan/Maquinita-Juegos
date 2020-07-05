@@ -17,8 +17,8 @@ public class UILevelComplete : MonoBehaviour
         if(_gameManager == null)
             _gameManager = FindObjectOfType<GameManager>();
 
+        //Obtiene el tiempo del juego y le aplica el formato de mm:ss.
         var timeSpan = TimeSpan.FromSeconds((int)_gameManager.GameTime);
-        //_scoreText.text = timeSpan.ToString();
         _scoreText.text = string.Format("{0:00}:{1:00}", timeSpan.TotalMinutes, timeSpan.Seconds);
 
         //Si es la última escena, desactiva el botón de siguiente nivel. Sino, lo activa.

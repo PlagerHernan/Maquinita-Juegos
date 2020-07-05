@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Muestra los puntos en pantalla
+/// </summary>
 public class UIScore : MonoBehaviour
 {
     ScoreHandler _scoreHandler;
