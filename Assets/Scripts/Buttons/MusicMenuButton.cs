@@ -21,12 +21,12 @@ public class MusicMenuButton : MonoBehaviour, IPointerUpHandler
 
     private void Start() 
     {
-        _musicToggle.isOn = !_menuManager.MusicOff;
+        _musicToggle.isOn = !_menuManager.MusicOn;
     }
 
     public void OnPointerUp (PointerEventData evenData)
 	{
-        _menuManager.MusicOff = _musicToggle.isOn;
+        _menuManager.MusicOn = _musicToggle.isOn;
         _music.SetMusic();
 	}
 }

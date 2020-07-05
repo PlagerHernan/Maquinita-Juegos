@@ -9,8 +9,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] bool _musicState = true;
     [SerializeField] bool _soundState = true;
     
-    public bool MusicOff { get => _musicState; set => _musicState = value; }
-    public bool SoundOff { get => _soundState; set => _soundState = value; } 
+    public bool MusicOn { get => _musicState; set => _musicState = value; }
+    public bool SoundOn { get => _soundState; set => _soundState = value; } 
 
     protected void Awake() 
     {

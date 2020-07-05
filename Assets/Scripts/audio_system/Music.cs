@@ -20,15 +20,13 @@ public class Music : MonoBehaviour
 
     public void SetMusic()
     {
-        if (_menuManager.MusicOff)
+        if (_menuManager.MusicOn)
         {
             PlayMusic();
-            print("Musica: " + _menuManager.MusicOff);
         }
         else
         {
             PauseMusic();
-            print("Musica: " + _menuManager.MusicOff);
         }
     }
 
