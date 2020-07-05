@@ -9,12 +9,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] bool _musicState = true;
     [SerializeField] bool _soundState = true;
     
-    public bool MusicOff { get => !_musicState; set => _musicState = !value; }
-    public bool SoundOff { get => !_soundState; set => _soundState = !value; } 
+    public bool MusicOff { get => _musicState; set => _musicState = value; }
+    public bool SoundOff { get => _soundState; set => _soundState = value; } 
 
     protected void Awake() 
     {
         _saveSystem = FindObjectOfType<SaveSystem>();
+
 		_gameSettings = _saveSystem.GetGameSettings(); 
         LoadSettingsInfo();
     }
@@ -32,5 +33,9 @@ public class MenuManager : MonoBehaviour
 		_saveSystem.SetGameSettings(_gameSettings); 
     }
 
-    
+    //cierre forzado
+    private void OnApplicationQuit() 
+    {
+        SaveSettingsInfo();
+    }
 }

@@ -42,7 +42,6 @@ public class GameSimulator : MonoBehaviour
         }
     }
 
-
     //si se cierra la aplicación en medio del juego
     private void OnApplicationQuit() 
     {
