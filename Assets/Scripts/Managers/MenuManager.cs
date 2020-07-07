@@ -4,19 +4,10 @@ using UnityEngine;
 
 public class MenuManager : Manager
 {
-    SaveSystem _saveSystem;
-    GameSettings _gameSettings;
-    [SerializeField] bool _musicState = true;
-    [SerializeField] bool _soundState = true;
-    
-    public bool MusicOn { get => _musicState; set => _musicState = value; }
-    public bool SoundOn { get => _soundState; set => _soundState = value; } 
-
-    protected void Awake() 
+    override protected void Awake()
     {
-        _saveSystem = FindObjectOfType<SaveSystem>();
-
-		_gameSettings = _saveSystem.GetGameSettings(); 
+        base.Awake();
+        _gameSettings = _saveSystem.GetGameSettings(); 
         LoadSettingsInfo();
     }
 

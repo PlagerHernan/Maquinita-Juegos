@@ -10,34 +10,10 @@ public class GameManager : Manager
     
     [Header("Menu Scene")]
     [SerializeField] int _menuSceneIndex;
-    [Header("Sound Settings")]
-    [SerializeField] bool _musicState = true;
-    [SerializeField] bool _soundState = true;
-
-    //Variables privadas, no son visibles desde el inspector
-    private bool _lastMusicState;
-    private bool _lastSoundState;
-
-    private bool _isLastScene;
-
-    private float _baseTime;
-    private float _gameTime;
-
-    SoundManager _soundManager;
-    SaveSystem _saveSystem;
-    GameSettings _gameSettings;
-    User _user;
     #endregion
 
     #region Propiedades
     //Propiedades, encapsula variables privadas.
-
-    //Estas propiedades en específico son accedidas por los botones de música y sonido.
-    //Estan negadas porque cuando el boton esta tachado, setea la variable a true.
-    public bool MusicOff { get => !_musicState; set => _musicState = !value; }
-    public bool SoundOff { get => !_soundState; set => _soundState = !value; }
-    public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
-    public bool IsLastScene { get => _isLastScene; }
     public float GameTime { get => _gameTime; }
 
     #endregion
@@ -53,10 +29,10 @@ public class GameManager : Manager
 
     //Metodo de Unity que se ejecuta MIENTRAS SE INICIALIZAN LOS COMPONENTES.
     //Se ejecuta antes del Start y se utiliza mucho para establecer las referencias a otros scripts (FindObjectOfType, GetComponent, etc)
-    private void Awake()
+    override protected void Awake()
     {
+        base.Awake();
         _soundManager = FindObjectOfType<SoundManager>();
-        _saveSystem = FindObjectOfType<SaveSystem>();
 
         //Suscribe los eventos al manejador de eventos
         SubscribeMethodsToEventsManager();

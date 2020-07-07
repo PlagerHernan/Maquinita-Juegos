@@ -4,7 +4,7 @@
     {
         if(_toggle != null)
         {
-            _toggle.isOn = _gameManager.MusicOff;
+            _toggle.isOn = !(_gameManager.MusicOn);
         }
     }
 }

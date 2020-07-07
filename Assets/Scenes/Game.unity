@@ -301,9 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb9ccfe65b231b43a9407e1fcbe68be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuSceneIndex: 0
   _musicState: 1
   _soundState: 1
+  _menuSceneIndex: 0
 --- !u!4 &181893824
 Transform:
   m_ObjectHideFlags: 0
@@ -2841,7 +2841,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181893823}
-        m_MethodName: set_SoundOff
+        m_MethodName: set_SoundOn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3920,7 +3920,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 181893823}
-        m_MethodName: set_MusicOff
+        m_MethodName: set_MusicOn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
