@@ -42,13 +42,7 @@ public class GameSimulator : MonoBehaviour
         }
     }
 
-    //si se cierra la aplicación en medio del juego
-    private void OnApplicationQuit() 
-    {
-        SaveInfo();
-    }
-
-    //llamado desde Back to Menu Button o OnApplicationQuit()
+    //llamado desde Back to Menu Button 
     public void SaveInfo()
     {
         _user.experiencePoints = _slider.value;

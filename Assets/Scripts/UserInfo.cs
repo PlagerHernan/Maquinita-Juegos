@@ -6,17 +6,15 @@ using UnityEditor;
 
 public class UserInfo : MonoBehaviour
 {
-    SaveSystem _saveSystem;
-    User _user;
+    MenuManager _menuManager; 
 
     private void Awake() 
     {
-        _saveSystem = FindObjectOfType<SaveSystem>();
-        _user = _saveSystem.GetUser();
+        _menuManager = FindObjectOfType<MenuManager>();
 
         Text[] children = GetComponentsInChildren<Text>();
-        children[0].text = "Nombre: " + _user.name;
-        children[1].text = "Puntos: " + _user.experiencePoints.ToString();
-        children[2].text = "Nivel: " + _user.currentLevel.ToString();
-    }
+        children[0].text = "Nombre: " + _menuManager.UserName;
+        children[1].text = "Puntos: " + _menuManager.UserExperiencePoints.ToString();
+        children[2].text = "Nivel: " + _menuManager.UserLevel;
+    }    
 }

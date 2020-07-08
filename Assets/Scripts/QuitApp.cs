@@ -12,6 +12,7 @@ public class QuitApp : MonoBehaviour
 	{
 		_menuManager = GameObject.FindObjectOfType<MenuManager>();
 		_menuManager.SaveSettingsInfo();
+		_menuManager.SaveUserInfo();
 
 		Application.Quit();
 		Debug.Log ("aplicación cerrada");
