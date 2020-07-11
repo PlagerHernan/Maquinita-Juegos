@@ -7,14 +7,19 @@ public class MenuManager : Manager
     override protected void Awake()
     {
         base.Awake();
-        _gameSettings = _saveSystem.GetGameSettings(); 
         LoadSettingsInfo();
+        LoadUserInfo();
     }
 
     void LoadSettingsInfo()
     {
+        _gameSettings = _saveSystem.GetGameSettings(); 
         _musicState = _gameSettings.musicOn;
         _soundState = _gameSettings.soundFXOn;
+    }
+    void LoadUserInfo()
+    {
+        _user = _saveSystem.GetUser();
     }
 
     public void SaveSettingsInfo()
