@@ -6,14 +6,14 @@ using UnityEngine.EventSystems;
 
 public class MusicMenuButton : MonoBehaviour, IPointerUpHandler
 {
-    MenuManager _menuManager;
+    Manager _manager;
     Music _music;
 
     Toggle _musicToggle;
 
     private void Awake() 
     {
-        _menuManager = FindObjectOfType<MenuManager>();
+        _manager = FindObjectOfType<Manager>();
         _music = FindObjectOfType<Music>();
 
         _musicToggle = GetComponent<Toggle>();
@@ -21,12 +21,13 @@ public class MusicMenuButton : MonoBehaviour, IPointerUpHandler
 
     private void Start() 
     {
-        _musicToggle.isOn = !_menuManager.MusicOn;
+        print("_menuManager.MusicOn: " + _manager.MusicOn);
+        _musicToggle.isOn = !_manager.MusicOn;
     }
 
     public void OnPointerUp (PointerEventData evenData)
 	{
-        _menuManager.MusicOn = _musicToggle.isOn;
+        _manager.MusicOn = _musicToggle.isOn;
         _music.SetMusic();
 	}
 }

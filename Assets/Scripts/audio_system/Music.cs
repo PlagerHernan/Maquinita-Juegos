@@ -5,12 +5,12 @@ using UnityEngine;
 public class Music : MonoBehaviour
 {
     AudioSource _audioSource;
-    MenuManager _menuManager;
+    Manager _manager;
 
     private void Awake() 
     {
         _audioSource = GetComponent<AudioSource>();
-        _menuManager = FindObjectOfType<MenuManager>();
+        _manager = FindObjectOfType<Manager>();
     }
 
     private void Start() 
@@ -20,7 +20,7 @@ public class Music : MonoBehaviour
 
     public void SetMusic()
     {
-        if (_menuManager.MusicOn)
+        if (_manager.MusicOn)
         {
             PlayMusic();
         }

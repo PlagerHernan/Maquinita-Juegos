@@ -7,8 +7,8 @@ public class GameSimulator : MonoBehaviour
 {
     #region Variables
     
-    SaveSystem _saveSystem;
-    User _user;
+    Manager _manager;
+
     [SerializeField] int _level;
     Slider _slider;
     Toggle _toggle;
@@ -18,21 +18,19 @@ public class GameSimulator : MonoBehaviour
 
     private void Awake() 
     {
-        #region Inicialización de variables 
-
-        _saveSystem = FindObjectOfType<SaveSystem>();
-        _user = _saveSystem.GetUser();
+        _manager = FindObjectOfType<Manager>();
 
         _slider = GetComponentInChildren<Slider>();
         _toggle = GetComponentInChildren<Toggle>();
         _toggleCheck = _toggle.transform.GetChild(0).gameObject;
+    }
 
-        #endregion
-
-        _slider.value = _user.experiencePoints;
+    private void Start() 
+    {
+        _slider.value = _manager.ExperiencePoints;
 
         //si ya completó el nivel, no aparece el check (sólo texto)
-        if (_user.currentLevel > _level)
+        if (_manager.UserLevel > _level)
         {
             _toggleCheck.SetActive(false);
         }
@@ -45,14 +43,14 @@ public class GameSimulator : MonoBehaviour
     //llamado desde Back to Menu Button 
     public void SaveInfo()
     {
-        _user.experiencePoints = _slider.value;
+        _manager.ExperiencePoints = _slider.value;
+        print("_slider.value: " + _slider.value);
+        print("_manager.ExperiencePoints: " + _manager.ExperiencePoints);
 
         //si no había completado el nivel y lo acaba de completar, suma un nivel
-        if (_user.currentLevel <= _level && _toggle.isOn)
+        if (_manager.UserLevel <= _level && _toggle.isOn)
         {
-            _user.currentLevel = _level + 1;
+            _manager.UserLevel = _level + 1;
         }
-        
-        _saveSystem.SetUser(_user);
     }
 }

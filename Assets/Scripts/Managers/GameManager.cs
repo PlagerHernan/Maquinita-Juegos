@@ -38,7 +38,7 @@ public class GameManager : Manager
         SubscribeMethodsToEventsManager();
 
         //Obtiene los datos de usuario
-        _user = _saveSystem.GetUser();
+        //_user = _saveSystem.GetUser();
     }
 
     //Metodo de Unity que se ejecuta una sola vez antes del primer Update

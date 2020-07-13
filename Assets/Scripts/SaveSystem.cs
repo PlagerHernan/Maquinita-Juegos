@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+using System;
+using System.Globalization;
+
 public class SaveSystem : MonoBehaviour
 {
     string _userFilePath;
     string _gameSettingsFilePath;
+    string _attemptFilePath;
+    string _listAttemptsFilePath;
 
     string _userJsonString;
     string _gameSettingsJsonString;
+    string _attemptJsonString;
+    string _listAttemptsJsonString;
 
     #region Json Getters
 
@@ -30,6 +37,41 @@ public class SaveSystem : MonoBehaviour
         User _user = JsonUtility.FromJson<User>(_userJsonString);
         
         return _user;
+    }
+
+    /* public Attempt GetAttempt()
+    {
+        _attemptFilePath = Application.dataPath + "/Attempt.json";
+
+        //si el archivo no existe, crea uno nuevo con valores por defecto
+        if (!File.Exists(_attemptFilePath))
+        {
+            File.Create(_attemptFilePath).Dispose();
+            _attemptJsonString = JsonUtility.ToJson(GetDefaultAttempt());
+            File.WriteAllText(_attemptFilePath, _attemptJsonString);
+        }
+
+        _attemptJsonString = File.ReadAllText(_attemptFilePath);
+        Attempt attempt = JsonUtility.FromJson<Attempt>(_attemptJsonString);
+        
+        return attempt;
+    } */
+    public ListAttempts GetListAttempts()
+    {
+        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
+
+        //si el archivo no existe, crea uno nuevo
+        if (!File.Exists(_listAttemptsFilePath))
+        {
+            File.Create(_listAttemptsFilePath).Dispose();
+            _listAttemptsJsonString = JsonUtility.ToJson(GetDefaultListAttempts());
+            File.WriteAllText(_listAttemptsFilePath, _listAttemptsJsonString);
+        }
+
+        _listAttemptsJsonString = File.ReadAllText(_listAttemptsFilePath);
+        ListAttempts listAttempts = JsonUtility.FromJson<ListAttempts>(_listAttemptsJsonString);
+        
+        return listAttempts;
     }
 
     //Metodo para obtener el JSON de configuraciones de juego
@@ -68,6 +110,18 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(_userFilePath, _userJsonString);
     }
 
+    public void SetListAttempts(ListAttempts listAttempts)
+    {
+        _listAttemptsJsonString = JsonUtility.ToJson(listAttempts);
+        File.WriteAllText(_listAttemptsFilePath, _listAttemptsJsonString);
+    }
+
+    public void SetAttempt(Attempt attempt)
+    {
+        _attemptJsonString = JsonUtility.ToJson(attempt);
+        File.WriteAllText(_attemptFilePath, _attemptJsonString);
+    }
+
     //Metodo para escribir el JSON de configuraciones de juego
     public void SetGameSettings(GameSettings gameSettings)
     {
@@ -88,6 +142,25 @@ public class SaveSystem : MonoBehaviour
 
         return user;
     }
+    
+    /* private Attempt GetDefaultAttempt()
+    {
+        var attempt = new Attempt();
+        attempt.text = "Partida por defecto";
+        attempt.count = 0;
+        
+        return attempt;
+    } */
+
+    private ListAttempts GetDefaultListAttempts()
+    {
+        var listAttempts = new ListAttempts();
+        listAttempts.list = new List<Attempt>();
+        //listAttempts.list.Add(GetDefaultAttempt());
+
+        return listAttempts;
+    }
+
     //Metodo que devuelve un GameSettings con las variables por default
     private GameSettings GetDefaultSettings()
     {
@@ -117,4 +190,39 @@ public struct GameSettings
 {
     public bool musicOn;
     public bool soundFXOn;
+}
+
+[System.Serializable]
+public struct Attempt
+{
+    public int ID_Attempt; //ID: idJuego_idUsuario_123
+    public int ID_Game;
+    public int ID_User;
+    public DateTime attempt_Starting_Point; 
+    public DateTime attempt_End;
+    public int game_Level;
+    public int current_Game_Level;
+   
+    public override string ToString()
+    {
+        return "ID_Attempt: " + ID_Attempt + " | ID_Game: " + ID_Game + " | ID_User: " + ID_User + "\n" 
+                    + "attempt_Starting_Point: " + attempt_Starting_Point + " | attempt_End: " + attempt_End + " | game_Level: " + game_Level + " | current_Game_Level: " + current_Game_Level;
+    }
+}
+[System.Serializable]
+public struct ListAttempts
+{
+    public List<Attempt> list;
+
+    public void PrintList()
+    {
+        Debug.Log("--------------------- List Attempts: --------------------- \n");
+
+        foreach (Attempt attempt in list)
+        {
+            Debug.Log(attempt + "\n");
+        }
+
+        Debug.Log("--------------------- End List --------------------- \n");
+    }
 }
