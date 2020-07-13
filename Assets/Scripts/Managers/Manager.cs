@@ -2,23 +2,23 @@
 
 public class Manager : MonoBehaviour
 {
-    //referencias
-    protected SoundManager _soundManager;
+    [Header("Audio Settings")]
+    [SerializeField] protected bool _musicState = true;
+    [SerializeField] protected bool _soundState = true;
+
+    //Variables privadas, no son visibles desde el inspector
     protected SaveSystem _saveSystem;
+
     protected GameSettings _gameSettings;
     protected User _user;
 
-    //Variables privadas, no son visibles desde el inspector
     protected bool _lastMusicState;
     protected bool _lastSoundState;
+
     protected bool _isLastScene;
+
     protected float _baseTime;
     protected float _gameTime;
-
-    //variables de Settings
-    //[Header("Audio Settings")]
-    protected bool _musicState; //[SerializeField] 
-    protected bool _soundState; //[SerializeField] 
 
     //variables de User
     /*protected string _userName;
@@ -35,6 +35,7 @@ public class Manager : MonoBehaviour
     public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
     
     public bool IsLastScene { get => _isLastScene; }
+    public int CurrentLevel { get => _user.currentLevel;}
 
     virtual protected void Awake()
     {
