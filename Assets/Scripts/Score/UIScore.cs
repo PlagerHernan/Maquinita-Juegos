@@ -6,14 +6,14 @@ using UnityEngine.UI;
 /// </summary>
 public class UIScore : MonoBehaviour
 {
-    ScoreHandler _scoreHandler;
+    ExperienceHandler _scoreHandler;
     Text _pointsText;
 
     float _lastScore = 0;
 
     private void Awake()
     {
-        _scoreHandler = FindObjectOfType<ScoreHandler>();
+        _scoreHandler = FindObjectOfType<ExperienceHandler>();
         _pointsText = GetComponent<Text>();
     }
 

@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43ac2effb78f4e419a6a878f27bfc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonAudioClip: {fileID: 8300000, guid: cb3751afd3b11c54c8d1cd2bad186012, type: 3}
+  _clickAudioClip: {fileID: 8300000, guid: cb3751afd3b11c54c8d1cd2bad186012, type: 3}
 --- !u!82 &497267779
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1485,8 +1485,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 181893823}
-        m_MethodName: OnClickRestart
+      - m_Target: {fileID: 181893826}
+        m_MethodName: RestartScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2093,7 +2093,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 10920}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

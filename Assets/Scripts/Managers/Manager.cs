@@ -17,14 +17,6 @@ public class Manager : MonoBehaviour
 
     protected bool _isLastScene;
 
-    protected float _baseTime;
-    protected float _gameTime;
-
-    //variables de User
-    /*protected string _userName;
-    protected int _userLevel;
-    protected float _userExperiencePoints;*/
-
     //propiedades de Settings
     public bool MusicOn { get => _musicState; set => _musicState = value; }
     public bool SoundOn { get => _soundState; set => _soundState = value; }
@@ -42,22 +34,56 @@ public class Manager : MonoBehaviour
         _saveSystem = FindObjectOfType<SaveSystem>();
     }
 
-    public void SaveSettingsInfo()
-    {
-        _gameSettings.musicOn = _musicState;
-        _gameSettings.soundFXOn = _soundState;
-		_saveSystem.SetGameSettings(_gameSettings); 
-    }
-
-    public void SaveUserInfo()
-    {
-        _saveSystem.SetUser(_user);
-    }
 
     //cierre forzado
     void OnApplicationQuit() 
     {
         SaveSettingsInfo();
         //SaveUserInfo();
+    }
+
+    //Reinicia escena o vuelve al menu
+    virtual protected void OnDisable()
+    {
+        SaveSettingsInfo();
+    }
+
+
+    //Guardo los game settings
+    public void SaveSettingsInfo()
+    {
+        _gameSettings.musicOn = _musicState;
+        _gameSettings.soundFXOn = _soundState;
+
+        var oldGameSettings = _saveSystem.GetGameSettings();
+        if (!oldGameSettings.Equals(_gameSettings))
+            _saveSystem?.SetGameSettings(_gameSettings);
+    }
+    //Guardo la info de usuario
+    public void SaveUserInfo()
+    {
+        var oldUserData = _saveSystem.GetUser();
+
+        if (!oldUserData.Equals(_user))
+            _saveSystem?.SetUser(_user);
+    }
+    //Cargo los gamesettings
+    protected void LoadSettingsInfo()
+    {
+        _gameSettings = _saveSystem.GetGameSettings();
+        _musicState = _gameSettings.musicOn;
+        _soundState = _gameSettings.soundFXOn;
+    }
+    //Cargo la info de usuario
+    protected void LoadUserInfo()
+    {
+        _user = _saveSystem.GetUser();
+    }
+    public void UnlockLevel()
+    {
+        int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+
+        if (!IsLastScene && _user.currentLevel <= sceneIndex)
+            _user.currentLevel = sceneIndex + 1;
     }
 }

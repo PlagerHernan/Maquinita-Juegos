@@ -24,7 +24,8 @@ public class SFXHandler : MonoBehaviour
 
     public void ClickSound()
     {
-        PlaySound(_clickAudioClip.name);
+        if(_clickAudioClip != null)
+            PlaySound(_clickAudioClip.name);
     }
     public void PlaySound(string name)
     {

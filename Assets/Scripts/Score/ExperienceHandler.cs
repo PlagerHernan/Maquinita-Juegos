@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreHandler : MonoBehaviour
+public class ExperienceHandler : MonoBehaviour
 {
     GameManager _gameManager;
     float _expPoints, _initialExpPoints = 0;

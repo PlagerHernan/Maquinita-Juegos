@@ -26,10 +26,13 @@ public class UIHandler : MonoBehaviour
 
         SubscribeEvents();
     }
-
+    private void OnDisable()
+    {
+        UnsubscribeEvents();
+    }
     #endregion
 
-    #region Metodos privados
+    #region Subscripcion y desuscripcion de eventos
 
     private void SubscribeEvents()
     {
@@ -37,13 +40,19 @@ public class UIHandler : MonoBehaviour
         EventsManager.SubscribeToEvent("GP_RESUME", ResumeScreen);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
     }
+    private void UnsubscribeEvents()
+    {
+        EventsManager.UnsubscribeToEvent("GP_PAUSE", PauseScreen);
+        EventsManager.UnsubscribeToEvent("GP_RESUME", ResumeScreen);
+        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+    }
 
     #endregion
 
     #region Métodos en EventsManager
-    
+
     //Metodos que activan o desactivan paneles.
-    public void PauseScreen()
+    private void PauseScreen()
     {
         if (_pauseScreen != null && _inGameScreen != null)
         {
@@ -52,7 +61,7 @@ public class UIHandler : MonoBehaviour
         }
     }
 
-    public void ResumeScreen()
+    private void ResumeScreen()
     {
         if (_pauseScreen != null && _inGameScreen != null)
         {

@@ -10,13 +10,13 @@ public class ExperienceDisplay : MonoBehaviour
     [SerializeField] Slider _slExpBar;
     [SerializeField] float _maxValue;
 
-    ScoreHandler _scoreHandler;
+    ExperienceHandler _scoreHandler;
 
     private void OnEnable()
     {
         //Si no tiene acces al ScoreHandler lo busca
         if (_scoreHandler == null)
-            _scoreHandler = FindObjectOfType<ScoreHandler>();
+            _scoreHandler = FindObjectOfType<ExperienceHandler>();
 
         //Calcula y muestra en pantalla los puntos ganados en la partida actual
         float expPoints = _scoreHandler.ExpPoints;
