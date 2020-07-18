@@ -8,52 +8,65 @@ using System.Globalization;
 public class Test : MonoBehaviour
 {
     SaveSystem _saveSystem;
-    Attempt _attempt;
     ListAttempts _listAttempts;
+    Manager _manager;
+
+    int _countAttempts; //simula ID de attempt
 
     private void Awake() 
     {
         _saveSystem = FindObjectOfType<SaveSystem>();    
+        _manager = FindObjectOfType<Manager>();
     }
 
     private void Start() 
     {
-        //Attempt
-        /*_attempt = _saveSystem.GetAttempt();
+        //_listAttempts = _saveSystem.GetListAttempts();
 
-        _attempt.count ++;
-        _attempt.text = "Hola mundo " + _attempt.count.ToString();
-        
-        _saveSystem.SetAttempt(_attempt);*/
+        //_manager.AddNewAttempt();
+        //AddNewAttempt();
 
-        //ListAttempts
+        //_listAttempts.PrintList();
+
+        //_saveSystem.SetListAttempts(_listAttempts);
+
+        //PrintDateTime();
+    }
+
+    private void Update() 
+    {
+        //botón delete: simula envío de lista de partidas al backend
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            //luego del envío, se elimina json con la lista de partidas
+            _saveSystem.DeleteListAttempts();
+            print("Lista de partidas eliminada");
+        }    
+    }
+
+    /* void AddNewAttempt()
+    {
         _listAttempts = _saveSystem.GetListAttempts();
 
-        AddNewAttempt();
-        AddNewAttempt();
-        _listAttempts.PrintList();
-
-        _saveSystem.SetListAttempts(_listAttempts);
-
-        /* DateTime dateTime = DateTime.Now;
-        print(dateTime); */
-    }
-
-    void AddNewAttempt()
-    {
         Attempt newAttempt = new Attempt();
 
-        newAttempt.attempt_Starting_Point = DateTime.Now;
-        newAttempt.attempt_End = DateTime.Now;
-        
+        //newAttempt.ID_Attempt = _countAttempts;
+        newAttempt.current_Game_Level = _manager.UserLevel;
+        newAttempt.experience_Points_per_Attempt = _manager.ExperiencePoints;
+        newAttempt.level_Completed = true;
+
         _listAttempts.list.Add(newAttempt);
-    }
+    } */ 
 
-    /* void FindInListAttempts()
+    //funciona mal
+    void PrintDateTime()
     {
-        Attempt foundAttempt = _listAttempts.list.Find(attempt => attempt.ID_Attempt == 0);
-        print("foundAttempt: " + foundAttempt);
-    } */
-
-    //funcion para eliminar lista de partidas despues de mandarlo
+        var time = DateTime.Now;
+        print(time);
+        string json = JsonUtility.ToJson((JsonDateTime) time);
+        print(json);
+        DateTime timeFromJson = JsonUtility.FromJson<JsonDateTime>(json);
+        //DateTime timeFromJson = Convert.ToDateTime(json);
+        print(timeFromJson);
+    }
 }

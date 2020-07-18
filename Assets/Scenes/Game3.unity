@@ -411,7 +411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Level 1 Stats
+  m_Text: Level 3 Stats
 --- !u!222 &190731019
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1317,7 +1317,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Level 1
+  m_Text: Level 3
 --- !u!222 &554751256
 CanvasRenderer:
   m_ObjectHideFlags: 0

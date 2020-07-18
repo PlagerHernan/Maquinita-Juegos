@@ -11,6 +11,8 @@ public class Manager : MonoBehaviour
 
     protected GameSettings _gameSettings;
     protected User _user;
+    protected ListAttempts _listAttempts;
+    protected int _countAttempts; //simula ID de attempt
 
     protected bool _lastMusicState;
     protected bool _lastSoundState;
@@ -23,11 +25,11 @@ public class Manager : MonoBehaviour
 
     //propiedades de User
     public string UserName { get => _user.name; set => _user.name = value; }
-    public int UserLevel { get => _user.currentLevel; set => _user.currentLevel = value; }
+    public int UserLevel { get => _user.currentLevel;}
     public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
     
     public bool IsLastScene { get => _isLastScene; }
-    public int CurrentLevel { get => _user.currentLevel;}
+    //public int CurrentLevel { get => _user.currentLevel;}
 
     virtual protected void Awake()
     {
@@ -48,7 +50,6 @@ public class Manager : MonoBehaviour
         SaveSettingsInfo();
     }
 
-
     //Guardo los game settings
     public void SaveSettingsInfo()
     {
@@ -67,6 +68,30 @@ public class Manager : MonoBehaviour
         if (!oldUserData.Equals(_user))
             _saveSystem?.SetUser(_user);
     }
+
+    private void NewAttempt(bool result)
+    {
+        print("Nueva partida agregada");
+
+        _countAttempts++;
+
+        _listAttempts = _saveSystem.GetListAttempts();
+
+        Attempt newAttempt = new Attempt();
+
+        newAttempt.ID_Attempt = _countAttempts;
+        newAttempt.current_Game_Level = UserLevel;
+        newAttempt.experience_Points_per_Attempt = ExperiencePoints;
+        newAttempt.level_Completed = result; //poner en false si no completó el nivel
+
+        _listAttempts.list.Add(newAttempt);
+        _saveSystem.SetListAttempts(_listAttempts);
+    }
+
+    //Guardo info de partida en lista de partidas
+    public void LevelCompletedAttempt() => NewAttempt(true);
+    public void LoseAttempt() => NewAttempt(false);
+
     //Cargo los gamesettings
     protected void LoadSettingsInfo()
     {

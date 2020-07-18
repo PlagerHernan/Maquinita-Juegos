@@ -46,5 +46,6 @@ public class SceneHandler : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        print("Escena reiniciada");
     }
 }

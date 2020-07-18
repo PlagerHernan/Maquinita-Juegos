@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class QuitApp : MonoBehaviour
 {
-	MenuManager _menuManager;
+	Manager _manager;
 
 	//llamado desde Exit Button 
     public void ExitApp()
 	{
-		_menuManager = GameObject.FindObjectOfType<MenuManager>();
-		_menuManager.SaveSettingsInfo();
-		_menuManager.SaveUserInfo();
+		_manager = GameObject.FindObjectOfType<Manager>();
+		_manager.SaveSettingsInfo();
+		_manager.SaveUserInfo();
 
 		Application.Quit();
 		Debug.Log ("aplicación cerrada");

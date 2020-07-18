@@ -74,6 +74,15 @@ public class SaveSystem : MonoBehaviour
         return listAttempts;
     }
 
+    public void DeleteListAttempts()
+    {
+        //si el archivo existe, lo elimina
+        if (File.Exists(_listAttemptsFilePath))
+        {
+            File.Delete(_listAttemptsFilePath);
+        }
+    }
+
     //Metodo para obtener el JSON de configuraciones de juego
     public GameSettings GetGameSettings()
     {
@@ -193,21 +202,49 @@ public struct GameSettings
 }
 
 [System.Serializable]
-public struct Attempt
+public struct JsonDateTime 
 {
+    public long value;
+
+    public static implicit operator DateTime(JsonDateTime jdt) 
+    {
+        Debug.Log("Converted to time");
+        return DateTime.FromFileTimeUtc(jdt.value);
+    }
+
+    public static implicit operator JsonDateTime(DateTime dt) 
+    {
+        Debug.Log("Converted to JDT");
+        JsonDateTime jdt = new JsonDateTime();
+        jdt.value = dt.ToFileTimeUtc();
+        return jdt;
+    }
+}
+
+[System.Serializable]
+public struct Attempt
+{ 
     public int ID_Attempt; //ID: idJuego_idUsuario_123
-    public int ID_Game;
-    public int ID_User;
-    public DateTime attempt_Starting_Point; 
-    public DateTime attempt_End;
-    public int game_Level;
+    //public int ID_Game;
+    //public int ID_User;
+    //public string attempt_Starting_Point; 
+    //public string attempt_End;
+    //public int game_Level;
     public int current_Game_Level;
+    //public int current_User_Level_In_The_Game;
+    //public int amount_of_Hits;
+    //public int amount_of_Errors;
+    public float experience_Points_per_Attempt;
+    //result?
+    //where the game stopped?
+    public bool level_Completed;
+
    
-    public override string ToString()
+    /*public override string ToString()
     {
         return "ID_Attempt: " + ID_Attempt + " | ID_Game: " + ID_Game + " | ID_User: " + ID_User + "\n" 
                     + "attempt_Starting_Point: " + attempt_Starting_Point + " | attempt_End: " + attempt_End + " | game_Level: " + game_Level + " | current_Game_Level: " + current_Game_Level;
-    }
+    }*/
 }
 [System.Serializable]
 public struct ListAttempts

@@ -83,12 +83,14 @@ public class GameManager : Manager
         EventsManager.SubscribeToEvent("GP_RESUME", SaveSettingsInfo);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
+        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
     }
     private void UnsubscribeEvents()
     {
         EventsManager.UnsubscribeToEvent("GP_RESUME", SaveSettingsInfo);
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
+        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
     }
     #endregion
 
@@ -110,6 +112,11 @@ public class GameManager : Manager
     public void OnClickResume()
     {
         EventsManager.TriggerEvent("GP_RESUME");
+    }
+
+    public void OnClickLevelComplete()
+    {
+        EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
     }
     #endregion
 }
