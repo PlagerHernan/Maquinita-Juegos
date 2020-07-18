@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIHandler : MonoBehaviour
+public class UIGameHandler : MonoBehaviour
 {
     //Variables seteables desde el inspector. OJO, se recomienda hacerlo por FindObjectsOfType para evitar problemas de NullReference.
 
@@ -19,15 +19,13 @@ public class UIHandler : MonoBehaviour
 
     private void Awake()
     {
-        //Obtengo los distintos paneles del canvas. La variable "true" de los GetComponents indican que tambien busque componentes inactivos.
-        _inGameScreen = GetComponentInChildren<UIInGame>(true).gameObject;
-        _pauseScreen = GetComponentInChildren<UIPause>(true).gameObject;
-        _levelCompleteScreen = GetComponentInChildren<UILevelComplete>(true).gameObject;
-
+        //Suscribo eventos al iniciar el nivel.
         SubscribeEvents();
     }
     private void OnDisable()
     {
+        //Se ejecuta solamente al cambiar de escena.
+        //Desuscribe eventos para que no queden en la próxima escena.
         UnsubscribeEvents();
     }
     #endregion
@@ -49,7 +47,7 @@ public class UIHandler : MonoBehaviour
 
     #endregion
 
-    #region Métodos en EventsManager
+    #region Métodos
 
     //Metodos que activan o desactivan paneles.
     private void PauseScreen()
