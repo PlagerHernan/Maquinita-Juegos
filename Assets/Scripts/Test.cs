@@ -8,28 +8,14 @@ using System.Globalization;
 public class Test : MonoBehaviour
 {
     SaveSystem _saveSystem;
-    ListAttempts _listAttempts;
-    Manager _manager;
-
-    int _countAttempts; //simula ID de attempt
 
     private void Awake() 
     {
-        _saveSystem = FindObjectOfType<SaveSystem>();    
-        _manager = FindObjectOfType<Manager>();
+        _saveSystem = FindObjectOfType<SaveSystem>(); 
     }
 
     private void Start() 
     {
-        //_listAttempts = _saveSystem.GetListAttempts();
-
-        //_manager.AddNewAttempt();
-        //AddNewAttempt();
-
-        //_listAttempts.PrintList();
-
-        //_saveSystem.SetListAttempts(_listAttempts);
-
         //PrintDateTime();
     }
 
@@ -44,21 +30,7 @@ public class Test : MonoBehaviour
         }    
     }
 
-    /* void AddNewAttempt()
-    {
-        _listAttempts = _saveSystem.GetListAttempts();
-
-        Attempt newAttempt = new Attempt();
-
-        //newAttempt.ID_Attempt = _countAttempts;
-        newAttempt.current_Game_Level = _manager.UserLevel;
-        newAttempt.experience_Points_per_Attempt = _manager.ExperiencePoints;
-        newAttempt.level_Completed = true;
-
-        _listAttempts.list.Add(newAttempt);
-    } */ 
-
-    //funciona mal
+    //al convertir de Json a DateTime, le agrega 3 horas más (posible problema con el formato, ver zona horaria) 
     void PrintDateTime()
     {
         var time = DateTime.Now;
@@ -66,7 +38,7 @@ public class Test : MonoBehaviour
         string json = JsonUtility.ToJson((JsonDateTime) time);
         print(json);
         DateTime timeFromJson = JsonUtility.FromJson<JsonDateTime>(json);
-        //DateTime timeFromJson = Convert.ToDateTime(json);
+        //DateTime timeFromJson = Convert.ToDateTime(json); //alternativa (no parece funcionar)
         print(timeFromJson);
     }
 }

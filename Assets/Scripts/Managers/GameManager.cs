@@ -84,6 +84,7 @@ public class GameManager : Manager
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+        EventsManager.SubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     private void UnsubscribeEvents()
     {
@@ -91,6 +92,7 @@ public class GameManager : Manager
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+        EventsManager.UnsubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     #endregion
 
@@ -99,6 +101,8 @@ public class GameManager : Manager
 
     //Actualiza el tiempo de juego
     private void RefreshGameTime() => _gameTime = Time.time - _baseTime;
+
+    
 
     #endregion
 
@@ -117,6 +121,10 @@ public class GameManager : Manager
     public void OnClickLevelComplete()
     {
         EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
+    }
+    public void OnClickLose()
+    {
+        EventsManager.TriggerEvent("GP_LOSE");
     }
     #endregion
 }

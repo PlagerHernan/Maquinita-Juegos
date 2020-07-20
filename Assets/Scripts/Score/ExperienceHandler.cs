@@ -35,6 +35,9 @@ public class ExperienceHandler : MonoBehaviour
         //Actualiza los puntos de experiencia.
         _expPoints += p;
         _gameManager.ExperiencePoints = _expPoints;
+
+        //Actualiza los puntos de experiencia de la partida.
+        _gameManager.ExpPointsAttempt =  _expPoints - _initialExpPoints;
     }
 
 

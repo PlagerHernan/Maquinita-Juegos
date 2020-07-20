@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class Manager : MonoBehaviour
     protected GameSettings _gameSettings;
     protected User _user;
     protected ListAttempts _listAttempts;
-    protected int _countAttempts; //simula ID de attempt
 
     protected bool _lastMusicState;
     protected bool _lastSoundState;
@@ -28,7 +28,10 @@ public class Manager : MonoBehaviour
     public int UserLevel { get => _user.currentLevel;}
     public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
     
+    float _expPointsAttempt; public float ExpPointsAttempt { get => _expPointsAttempt; set => _expPointsAttempt = value; }
     public bool IsLastScene { get => _isLastScene; }
+    
+
     //public int CurrentLevel { get => _user.currentLevel;}
 
     virtual protected void Awake()
@@ -71,21 +74,20 @@ public class Manager : MonoBehaviour
 
     private void NewAttempt(bool result)
     {
-        print("Nueva partida agregada");
-
-        _countAttempts++;
-
         _listAttempts = _saveSystem.GetListAttempts();
 
         Attempt newAttempt = new Attempt();
 
-        newAttempt.ID_Attempt = _countAttempts;
-        newAttempt.current_Game_Level = UserLevel;
-        newAttempt.experience_Points_per_Attempt = ExperiencePoints;
-        newAttempt.level_Completed = result; //poner en false si no completó el nivel
+        //newAttempt.game_Level = 
+        //newAttempt.current_Game_Level = 
+        newAttempt.current_User_Level_In_The_Game = UserLevel; //nivel del usuario
+        newAttempt.experience_Points_per_Attempt = ExpPointsAttempt; //puntos de exp de la partida
+        newAttempt.level_Completed = result; //derrota o victoria
 
         _listAttempts.list.Add(newAttempt);
         _saveSystem.SetListAttempts(_listAttempts);
+
+        print("Partida guardada");
     }
 
     //Guardo info de partida en lista de partidas

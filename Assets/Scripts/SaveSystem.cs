@@ -224,20 +224,19 @@ public struct JsonDateTime
 [System.Serializable]
 public struct Attempt
 { 
-    public int ID_Attempt; //ID: idJuego_idUsuario_123
+    //public int ID_Attempt; //ID: idJuego_idUsuario_123
     //public int ID_Game;
     //public int ID_User;
     //public string attempt_Starting_Point; 
     //public string attempt_End;
-    //public int game_Level;
-    public int current_Game_Level;
-    //public int current_User_Level_In_The_Game;
-    //public int amount_of_Hits;
-    //public int amount_of_Errors;
+    public int game_Level; //el nivel que jugó ahora -> no siempre la escena es un nivel -> hacer variable en gameManager.cs
+    public int current_Game_Level; //el ultimo nivel desbloqueado
+    public int current_User_Level_In_The_Game; //random, tiene que ver con puntos de experiencia -> ej cada 100 puntos cambia de nivel
+    //public int amount_of_Hits; //hacer metodo estatico para sumar 
+    //public int amount_of_Errors; //hacer metodo estatico para sumar
     public float experience_Points_per_Attempt;
-    //result?
-    //where the game stopped?
-    public bool level_Completed;
+    //int where the game stopped? //escena en la cual crasheó
+    public bool level_Completed; 
 
    
     /*public override string ToString()
