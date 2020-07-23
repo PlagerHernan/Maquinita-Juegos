@@ -27,10 +27,8 @@ public class Manager : MonoBehaviour
     public string UserName { get => _user.name; set => _user.name = value; }
     public int UserLevel { get => _user.currentLevel;}
     public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
-    
-    float _expPointsAttempt; public float ExpPointsAttempt { get => _expPointsAttempt; set => _expPointsAttempt = value; }
-    public bool IsLastScene { get => _isLastScene; }
-    
+
+    private bool isLastScene; public bool IsLastScene { get => isLastScene; set => isLastScene = value; }
 
     //public int CurrentLevel { get => _user.currentLevel;}
 
@@ -41,7 +39,7 @@ public class Manager : MonoBehaviour
 
 
     //cierre forzado
-    void OnApplicationQuit() 
+    virtual protected void OnApplicationQuit() 
     {
         SaveSettingsInfo();
         //SaveUserInfo();
@@ -72,28 +70,6 @@ public class Manager : MonoBehaviour
             _saveSystem?.SetUser(_user);
     }
 
-    private void NewAttempt(bool result)
-    {
-        _listAttempts = _saveSystem.GetListAttempts();
-
-        Attempt newAttempt = new Attempt();
-
-        //newAttempt.game_Level = 
-        //newAttempt.current_Game_Level = 
-        newAttempt.current_User_Level_In_The_Game = UserLevel; //nivel del usuario
-        newAttempt.experience_Points_per_Attempt = ExpPointsAttempt; //puntos de exp de la partida
-        newAttempt.level_Completed = result; //derrota o victoria
-
-        _listAttempts.list.Add(newAttempt);
-        _saveSystem.SetListAttempts(_listAttempts);
-
-        print("Partida guardada");
-    }
-
-    //Guardo info de partida en lista de partidas
-    public void LevelCompletedAttempt() => NewAttempt(true);
-    public void LoseAttempt() => NewAttempt(false);
-
     //Cargo los gamesettings
     protected void LoadSettingsInfo()
     {
@@ -110,6 +86,7 @@ public class Manager : MonoBehaviour
     {
         int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 
+        //si no es la última escena y el siguiente nivel no está aún desbloqueado, lo desbloquea
         if (!IsLastScene && _user.currentLevel <= sceneIndex)
             _user.currentLevel = sceneIndex + 1;
     }

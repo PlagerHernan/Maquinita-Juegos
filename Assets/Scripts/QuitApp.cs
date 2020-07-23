@@ -11,6 +11,7 @@ public class QuitApp : MonoBehaviour
     public void ExitApp()
 	{
 		_manager = GameObject.FindObjectOfType<Manager>();
+		
 		_manager.SaveSettingsInfo();
 		_manager.SaveUserInfo();
 

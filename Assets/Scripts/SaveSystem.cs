@@ -10,13 +10,18 @@ public class SaveSystem : MonoBehaviour
 {
     string _userFilePath;
     string _gameSettingsFilePath;
-    string _attemptFilePath;
     string _listAttemptsFilePath;
 
     string _userJsonString;
     string _gameSettingsJsonString;
-    string _attemptJsonString;
     string _listAttemptsJsonString;
+
+    private void Awake() 
+    {
+        /* _userFilePath = Application.dataPath + "/User.json";
+        _gameSettingsFilePath = Application.dataPath + "/GameSettings.json";
+        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json"; */
+    }
 
     #region Json Getters
 
@@ -39,23 +44,6 @@ public class SaveSystem : MonoBehaviour
         return _user;
     }
 
-    /* public Attempt GetAttempt()
-    {
-        _attemptFilePath = Application.dataPath + "/Attempt.json";
-
-        //si el archivo no existe, crea uno nuevo con valores por defecto
-        if (!File.Exists(_attemptFilePath))
-        {
-            File.Create(_attemptFilePath).Dispose();
-            _attemptJsonString = JsonUtility.ToJson(GetDefaultAttempt());
-            File.WriteAllText(_attemptFilePath, _attemptJsonString);
-        }
-
-        _attemptJsonString = File.ReadAllText(_attemptFilePath);
-        Attempt attempt = JsonUtility.FromJson<Attempt>(_attemptJsonString);
-        
-        return attempt;
-    } */
     public ListAttempts GetListAttempts()
     {
         _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
@@ -72,15 +60,6 @@ public class SaveSystem : MonoBehaviour
         ListAttempts listAttempts = JsonUtility.FromJson<ListAttempts>(_listAttemptsJsonString);
         
         return listAttempts;
-    }
-
-    public void DeleteListAttempts()
-    {
-        //si el archivo existe, lo elimina
-        if (File.Exists(_listAttemptsFilePath))
-        {
-            File.Delete(_listAttemptsFilePath);
-        }
     }
 
     //Metodo para obtener el JSON de configuraciones de juego
@@ -125,12 +104,6 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(_listAttemptsFilePath, _listAttemptsJsonString);
     }
 
-    public void SetAttempt(Attempt attempt)
-    {
-        _attemptJsonString = JsonUtility.ToJson(attempt);
-        File.WriteAllText(_attemptFilePath, _attemptJsonString);
-    }
-
     //Metodo para escribir el JSON de configuraciones de juego
     public void SetGameSettings(GameSettings gameSettings)
     {
@@ -140,6 +113,16 @@ public class SaveSystem : MonoBehaviour
     #endregion
 
     //=================== PRIVATE METHODS ========================
+
+    //Metodo que devuelve un GameSettings con las variables por default
+    private GameSettings GetDefaultSettings()
+    {
+        var gS = new GameSettings();
+        gS.musicOn = true;
+        gS.soundFXOn = true;
+
+        return gS;
+    }
 
     //Metodo que devuelve un User con las variables por default
     private User GetDefaultUser()
@@ -151,34 +134,27 @@ public class SaveSystem : MonoBehaviour
 
         return user;
     }
-    
-    /* private Attempt GetDefaultAttempt()
-    {
-        var attempt = new Attempt();
-        attempt.text = "Partida por defecto";
-        attempt.count = 0;
-        
-        return attempt;
-    } */
 
+    //Devuelve una lista vacía e inicializada de partidas
     private ListAttempts GetDefaultListAttempts()
     {
         var listAttempts = new ListAttempts();
         listAttempts.list = new List<Attempt>();
-        //listAttempts.list.Add(GetDefaultAttempt());
 
         return listAttempts;
     }
 
-    //Metodo que devuelve un GameSettings con las variables por default
-    private GameSettings GetDefaultSettings()
+    public void DeleteListAttempts()
     {
-        var gS = new GameSettings();
-        gS.musicOn = true;
-        gS.soundFXOn = true;
+        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
 
-        return gS;
+        //si el archivo existe, lo elimina
+        if (File.Exists(_listAttemptsFilePath))
+        {
+            File.Delete(_listAttemptsFilePath);
+        }
     }
+
 }
 
 [System.Serializable]
@@ -208,13 +184,11 @@ public struct JsonDateTime
 
     public static implicit operator DateTime(JsonDateTime jdt) 
     {
-        Debug.Log("Converted to time");
         return DateTime.FromFileTimeUtc(jdt.value);
     }
 
     public static implicit operator JsonDateTime(DateTime dt) 
     {
-        Debug.Log("Converted to JDT");
         JsonDateTime jdt = new JsonDateTime();
         jdt.value = dt.ToFileTimeUtc();
         return jdt;
@@ -227,18 +201,19 @@ public struct Attempt
     //public int ID_Attempt; //ID: idJuego_idUsuario_123
     //public int ID_Game;
     //public int ID_User;
-    //public string attempt_Starting_Point; 
-    //public string attempt_End;
-    public int game_Level; //el nivel que jugó ahora -> no siempre la escena es un nivel -> hacer variable en gameManager.cs
-    public int current_Game_Level; //el ultimo nivel desbloqueado
-    public int current_User_Level_In_The_Game; //random, tiene que ver con puntos de experiencia -> ej cada 100 puntos cambia de nivel
-    //public int amount_of_Hits; //hacer metodo estatico para sumar 
-    //public int amount_of_Errors; //hacer metodo estatico para sumar
-    public float experience_Points_per_Attempt;
-    //int where the game stopped? //escena en la cual crasheó
-    public bool level_Completed; 
-
-   
+    public bool level_Completed; //result
+    public int game_Level; //el nivel que jugó ahora -> a futuro, no siempre la escena va a corresponder a un nivel, pero en este caso sí 
+    public float experience_Points_per_Attempt; //puntos de exp de la partida
+    public int current_Game_Level; //el último nivel desbloqueado
+    public int current_User_Level_In_The_Game; //nivel de experiencia de usuario -> cada 10 puntos cambia de nivel
+    public int amount_of_Hits; //hacer metodo estatico para sumar 
+    public int amount_of_Errors; //hacer metodo estatico para sumar
+    public string attempt_Starting_Point; //fecha y hora de inicio de la partida
+    public string attempt_End; //fecha y hora de fin de la partida
+    public float attempt_Time; //(agregado, no estaba en la tabla) duración de la partida 
+    public bool crashed; //(agregado, no estaba en la tabla) si la app crasheó o no
+    public int where_the_Game_Stopped; //escena en la cual crasheó
+    
     /*public override string ToString()
     {
         return "ID_Attempt: " + ID_Attempt + " | ID_Game: " + ID_Game + " | ID_User: " + ID_User + "\n" 

@@ -13,6 +13,8 @@ public class UIGameHandler : MonoBehaviour
     [SerializeField] GameObject _pauseScreen;
     [Header("Level complete Settings")]
     [SerializeField] GameObject _levelCompleteScreen;
+
+    Manager _manager;
     #endregion
 
     #region Funciones de Unity
@@ -37,12 +39,14 @@ public class UIGameHandler : MonoBehaviour
         EventsManager.SubscribeToEvent("GP_PAUSE", PauseScreen);
         EventsManager.SubscribeToEvent("GP_RESUME", ResumeScreen);
         EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+        EventsManager.SubscribeToEvent("GP_LOSE", LoseScreen);
     }
     private void UnsubscribeEvents()
     {
         EventsManager.UnsubscribeToEvent("GP_PAUSE", PauseScreen);
         EventsManager.UnsubscribeToEvent("GP_RESUME", ResumeScreen);
         EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+        EventsManager.UnsubscribeToEvent("GP_LOSE", LoseScreen);
     }
 
     #endregion
@@ -76,6 +80,14 @@ public class UIGameHandler : MonoBehaviour
             _inGameScreen.SetActive(false);
             _pauseScreen.SetActive(false);
         }
+    }
+
+    //Al perder, activa LevelCompleteScreen pero sin el botón de siguiente nivel (simula ser la última escena) 
+    public void LoseScreen()
+    {
+        _manager = FindObjectOfType<Manager>();
+        _manager.IsLastScene = true;
+        LevelCompleteScreen();
     }
 
     #endregion
