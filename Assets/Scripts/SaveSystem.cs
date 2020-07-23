@@ -176,6 +176,7 @@ public class SaveSystem : MonoBehaviour
         var gS = new GameSettings();
         gS.musicOn = true;
         gS.soundFXOn = true;
+        gS.language = Language.English;
 
         return gS;
     }
@@ -199,6 +200,7 @@ public struct GameSettings
 {
     public bool musicOn;
     public bool soundFXOn;
+    public Language language;
 }
 
 [System.Serializable]

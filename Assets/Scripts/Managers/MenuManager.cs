@@ -7,6 +7,9 @@ public class MenuManager : Manager
     override protected void Awake()
     {
         base.Awake();
+
+        SubscribeEvents();
+
         LoadSettingsInfo();
         LoadUserInfo();
     }
@@ -15,6 +18,11 @@ public class MenuManager : Manager
     {
         _gameSettings = _saveSystem.GetGameSettings(); 
         _user = _saveSystem.GetUser();    
+    }
+
+    private void SubscribeEvents()
+    {
+        EventsManager.SubscribeToEvent("GP_MAINMENU", SaveSettingsInfo);
     }
 
     #region OnClickEvents
