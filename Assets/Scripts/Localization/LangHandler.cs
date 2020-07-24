@@ -36,8 +36,7 @@ public class LangHandler : MonoBehaviour
     private static Dictionary<string, Dictionary<Language, string>> _savedCodex;
 
     //Url para saber desde donde descargar nuestro documento
-    //string externalUrl = "https://docs.google.com/spreadsheets/d/1O20IJ7_-SEvjHePyHuXnh_mLCfNCO5y3EkidLJkLRUM/export?format=csv";
-    string externalUrl = "https://docs.google.com/spreadsheets/d/1M7RDaoYPXnVhof8Cp2SRIU0mcMyqk4kGBuTAphfNTFU/export?format=csv";
+    [SerializeField] string externalUrl;
 
     // un evento para actualizar cuando se tiene que cambiar el texto
     public event Action OnUpdate = delegate { };
@@ -59,7 +58,8 @@ public class LangHandler : MonoBehaviour
             //Para crear el ejecutable,tirar el archivo .csv dentro de la carpeta Nombre_Data   
             //LanguageManager = LanguageU.loadCodexFromString("NombreDelDoc.csv", File.ReadAllText(Application.dataPath + "/NombreDelDoc.csv"));
 
-            StartCoroutine(DownloadCSV(externalUrl));
+            if(externalUrl != "")
+                StartCoroutine(DownloadCSV(externalUrl));
         }
         else
         {
@@ -88,6 +88,7 @@ public class LangHandler : MonoBehaviour
     /// <returns></returns>
     public IEnumerator DownloadCSV(string url)
     {
+        url = System.Text.RegularExpressions.Regex.Replace(url, "edit.+", "export?format=csv");
         var www = new UnityWebRequest(url);
         www.downloadHandler = new DownloadHandlerBuffer();
         yield return www.SendWebRequest();    

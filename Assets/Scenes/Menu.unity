@@ -1631,6 +1631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ada87b88b85894da8c97477c99a195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  externalUrl: https://docs.google.com/spreadsheets/d/1M7RDaoYPXnVhof8Cp2SRIU0mcMyqk4kGBuTAphfNTFU/export?format=csv
 --- !u!1 &418891876
 GameObject:
   m_ObjectHideFlags: 0
@@ -5402,6 +5403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c6e33471619e1438a70f68430446e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _langTextIDs:
+  - menu_settings_lang-en
+  - menu_settings_lang-es
+  - menu_settings_lang-pr
 --- !u!1 &1352741552
 GameObject:
   m_ObjectHideFlags: 0

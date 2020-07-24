@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LanguageSelector : MonoBehaviour
 {
+    [Tooltip("IDs de los idiomas a cargar al dropdown. Deben estar en el mismo orden que el definido por el enum Language")]
+    [SerializeField] string[] _langTextIDs;
+
+    //Array que contendrá los textos de idiomas
+    string[] _langTexts;
+
     //Referencia al LangHandler para obtener y setear el idioma actual.
     LangHandler _langHandler;
 
@@ -14,10 +19,19 @@ public class LanguageSelector : MonoBehaviour
     //Declaro variable para guardar el idioma actual
     Language _selectedLanguage;
 
+    //Declaro un booleano para prevenir stackoverflow al cambiar valores
+    bool _alreadyExecuted = false;
+
     private void Awake()
     {
         _langHandler = FindObjectOfType<LangHandler>();
         _dropdown = GetComponent<Dropdown>();
+
+        if(_langTextIDs != null)
+        {
+            _langTexts = new string[_langTextIDs.Length];
+            _langHandler.OnUpdate += ChangeLang;
+        }
     }
 
     private void OnEnable()
@@ -60,6 +74,35 @@ public class LanguageSelector : MonoBehaviour
     void OnValueChanged(Dropdown change)
     {
         _selectedLanguage = (Language)change.value;
-        _langHandler.SelectedLanguage = _selectedLanguage;
+
+        #region Warning: Recursion. Proceda con precaucion y no altere la medida de seguridad
+        //Este if es una MEDIDA DE SEGURIDAD para evitar ejecución recursiva (y por ende un stackoverflow).
+        //Si no lo tuviera el proceso que ocurriría es el siguiente:
+        //1- Asigno el idioma elegido a la propiedad en el LangHandler, el cual a su vez ejecuta el delegado OnUpdate();
+        //2- El metodo ChangeLang() de este script está suscrito al delegado, por ende se ejecuta.
+        //3- Cuando le cambio el valor al dropdown, se ejecuta el OnValueChanged (este mismo método). Esto pasa porque cambia de valor.
+        //4- Se vuelve a repetir el paso 1
+        if (!_alreadyExecuted)
+        {
+            _alreadyExecuted = true;
+            _langHandler.SelectedLanguage = _selectedLanguage;
+            _alreadyExecuted = false;
+        }
+        #endregion
+    }
+
+    //suscribo un método al OnUpdate del LangHandler para que actualice mis textos
+    void ChangeLang()
+    {
+        for (int i = 0; i < _langTextIDs.Length; i++)
+        {
+            _langTexts[i] = _langHandler.GetTranslate(_langTextIDs[i]);
+        }
+
+        var langList = _langTexts.ArrayToList();
+
+        _dropdown.ClearOptions();
+        _dropdown.AddOptions(langList);
+        _dropdown.value = (int)_selectedLanguage;
     }
 }

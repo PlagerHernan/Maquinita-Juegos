@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class LanguageExtractor
@@ -25,15 +26,19 @@ public class LanguageExtractor
         //Booleano para saber si es la primera linea
         bool first = true;
 
-        //Diccionario para saber en que posicion esta determinada columna, Ej: <Idioma,0>, <Texto,1>
+        //Diccionario para saber en que posicion esta determinada columna, Ej: <1, English>, <2, Spanish>
         var languagesToIndex = new Dictionary<int, Language>();
+
+        //Creo una expresion regular que me permite separar los campos de una fila sin que me detecte las comas (las que son parte de textos)
+        Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
         foreach (var row in rows)
         {
             //Sumamos para saber que estamos en la primera linea
             lineNum++;
-            //Separamos por columna al encontrar un ";"...tambien se toma la ","
-            var cells = row.Split(',');
+
+            //Separamos cada celda con el parseador definido anteriormente.
+            var cells = CSVParser.Split(row);
 
             #region Headers initialisation
 
@@ -76,6 +81,12 @@ public class LanguageExtractor
 
             for (int i = 1; i < cells.Length; i++)
             {
+                //Quito los espacios y las comillas del inicio del texto
+                cells[i] = cells[i].TrimStart(' ', '"');
+
+                //Quito las comillas del final del texto
+                cells[i] = cells[i].TrimEnd('"');
+
                 var lang = languagesToIndex[i];
                 var text = cells[i];
 
