@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SoundManager : MonoBehaviour
+public class AudioLoader : MonoBehaviour
 {
     [Header("Paths")]
     [SerializeField] string _sounds = "Audio/SFX";

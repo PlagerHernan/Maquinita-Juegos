@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MusicHandler : MonoBehaviour
 {
-    SoundManager _soundManager;
+    AudioLoader _audioLoader;
     AudioSource _audioSource;
     Manager _manager;
 
     private void Awake() 
     {
-        _soundManager = FindObjectOfType<SoundManager>();
+        _audioLoader = FindObjectOfType<AudioLoader>();
         _audioSource = GetComponent<AudioSource>();
         _manager = FindObjectOfType<Manager>();
     }
@@ -41,7 +41,7 @@ public class MusicHandler : MonoBehaviour
     //Cambio la música
     public void ChangeSong(string name)
     {
-        var clip = _soundManager.GetSound(name);
+        var clip = _audioLoader.GetSound(name);
 
         _audioSource.clip = clip;
         Play();

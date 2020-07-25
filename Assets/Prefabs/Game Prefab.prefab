@@ -3001,6 +3001,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: game_levelcomplete_relics
+--- !u!1 &4763118569200776892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6621653187635217451}
+  - component: {fileID: 8764208159514497994}
+  m_Layer: 0
+  m_Name: Test Attempt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6621653187635217451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763118569200776892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7701353695032986956}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8764208159514497994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763118569200776892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8092b0e94574dee41bdfd81d04b1eee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4766437314955937843
 GameObject:
   m_ObjectHideFlags: 0
@@ -5101,7 +5144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ada87b88b85894da8c97477c99a195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  externalUrl: 
+  _externalUrl: 
+  _localCSVFileName: 
 --- !u!1 &7701353695032986947
 GameObject:
   m_ObjectHideFlags: 0
@@ -5136,6 +5180,7 @@ Transform:
   - {fileID: 7701353695188938756}
   - {fileID: 7701353695096504612}
   - {fileID: 7701353694161051151}
+  - {fileID: 6621653187635217451}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

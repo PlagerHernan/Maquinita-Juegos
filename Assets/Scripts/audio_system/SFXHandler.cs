@@ -6,13 +6,13 @@ public class SFXHandler : MonoBehaviour
     [SerializeField] AudioClip _clickAudioClip;
 
     Manager _manager;
-    SoundManager _soundManager;
+    AudioLoader _audioLoader;
     AudioSource _audioSource;
 
     private void Awake() 
     {
         _manager = FindObjectOfType<Manager>();
-        _soundManager = FindObjectOfType<SoundManager>();
+        _audioLoader = FindObjectOfType<AudioLoader>();
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -32,7 +32,7 @@ public class SFXHandler : MonoBehaviour
     //Reproduzco un sonido
     public void PlaySound(string name)
     {
-        var clip = _soundManager.GetSound(name);
+        var clip = _audioLoader.GetSound(name);
         _audioSource.PlayOneShot(clip);
     }
 
