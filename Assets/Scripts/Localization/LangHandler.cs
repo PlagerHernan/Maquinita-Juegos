@@ -91,7 +91,7 @@ public class LangHandler : MonoBehaviour
         url = System.Text.RegularExpressions.Regex.Replace(url, "edit.+", "export?format=csv");
         var www = new UnityWebRequest(url);
         www.downloadHandler = new DownloadHandlerBuffer();
-        yield return www.SendWebRequest();    
+        yield return www.SendWebRequest();
         languageManager = LanguageExtractor.ExtractTexts("www", www.downloadHandler.text);
         _savedCodex = languageManager;
 
