@@ -3,7 +3,7 @@
 /// <summary>
 /// Manejador de eventos
 /// </summary>
-public class EventsManager
+public class EventsHandler
 {
     public delegate void EventReceiver();
     private static Dictionary<string, EventReceiver> _events;

@@ -17,7 +17,7 @@ public class Manager : MonoBehaviour
     protected bool _lastMusicState;
     protected bool _lastSoundState;
 
-    protected bool _isLastScene;
+    //protected bool _isLastScene;
 
     //propiedades de Settings
     public bool MusicOn { get => _musicState; set => _musicState = value; }
@@ -29,7 +29,7 @@ public class Manager : MonoBehaviour
     public int UserLevel { get => _user.currentLevel;}
     public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
 
-    private bool isLastScene; public bool IsLastScene { get => isLastScene; set => isLastScene = value; }
+    protected bool _isLastScene; public bool IsLastScene { get => _isLastScene; set => _isLastScene = value; }
 
     //public int CurrentLevel { get => _user.currentLevel;}
 

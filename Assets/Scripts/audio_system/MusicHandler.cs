@@ -24,16 +24,21 @@ public class MusicHandler : MonoBehaviour
             _audioSource.Pause();
     }
 
+    //Reproduzco la música
     public void Play()
     {
         _manager.MusicOn = true;
         _audioSource.Play();
     }
+
+    //Pauso la música
     public void Pause()
     {
         _manager.MusicOn = false;
         _audioSource.Pause();
     }
+
+    //Cambio la música
     public void ChangeSong(string name)
     {
         var clip = _soundManager.GetSound(name);

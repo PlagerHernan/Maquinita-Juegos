@@ -19,15 +19,15 @@ public class MenuManager : Manager
 
     private void SubscribeEvents()
     {
-        EventsManager.SubscribeToEvent("GP_MAINMENU", SaveSettingsInfo);
+        EventsHandler.SubscribeToEvent("GP_MAINMENU", SaveSettingsInfo);
     }
 
     #region OnClickEvents
 
-    public void OnClickMenuScreen() => EventsManager.TriggerEvent("GP_MAINMENU");
-    public void OnClickSettingsScreen() => EventsManager.TriggerEvent("GP_SETTINGS");
-    public void OnClickCreditsScreen() => EventsManager.TriggerEvent("GP_CREDITS");
-    public void OnClickLevelSelectScreen() => EventsManager.TriggerEvent("GP_LEVELSELECT");
+    public void OnClickMenuScreen() => EventsHandler.TriggerEvent("GP_MAINMENU");
+    public void OnClickSettingsScreen() => EventsHandler.TriggerEvent("GP_SETTINGS");
+    public void OnClickCreditsScreen() => EventsHandler.TriggerEvent("GP_CREDITS");
+    public void OnClickLevelSelectScreen() => EventsHandler.TriggerEvent("GP_LEVELSELECT");
 
     #endregion
 

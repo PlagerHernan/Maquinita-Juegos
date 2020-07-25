@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIGameHandler : MonoBehaviour
 {
@@ -15,8 +13,9 @@ public class UIGameHandler : MonoBehaviour
     [SerializeField] GameObject _levelCompleteScreen;
 
     Manager _manager;
-    bool _isLastScene; public bool IsLastScene { get => _isLastScene; }
-    bool _lose = false; public bool Lose { get => _lose; }
+
+    public bool IsLastScene { get; private set; }
+    public bool Lose { get; private set; }
 
 
     #endregion
@@ -25,9 +24,18 @@ public class UIGameHandler : MonoBehaviour
 
     private void Awake()
     {
+        //Obtengo la referencia al Manager
         _manager = FindObjectOfType<Manager>();
+
         //Suscribo eventos al iniciar el nivel.
         SubscribeEvents();
+    }
+
+    private void Start()
+    {
+        //Cargo el estado de si esta es la última escena
+        if (_manager != null)
+            IsLastScene = _manager.IsLastScene;
     }
     private void OnDisable()
     {
@@ -41,17 +49,17 @@ public class UIGameHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        EventsManager.SubscribeToEvent("GP_PAUSE", PauseScreen);
-        EventsManager.SubscribeToEvent("GP_RESUME", ResumeScreen);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
-        EventsManager.SubscribeToEvent("GP_LOSE", LoseScreen);
+        EventsHandler.SubscribeToEvent("GP_PAUSE", PauseScreen);
+        EventsHandler.SubscribeToEvent("GP_RESUME", ResumeScreen);
+        EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
+        EventsHandler.SubscribeToEvent("GP_LOSE", LoseScreen);
     }
     private void UnsubscribeEvents()
     {
-        EventsManager.UnsubscribeToEvent("GP_PAUSE", PauseScreen);
-        EventsManager.UnsubscribeToEvent("GP_RESUME", ResumeScreen);
-        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
-        EventsManager.UnsubscribeToEvent("GP_LOSE", LoseScreen);
+        EventsHandler.UnsubscribeToEvent("GP_PAUSE", PauseScreen);
+        EventsHandler.UnsubscribeToEvent("GP_RESUME", ResumeScreen);
+        EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
+        EventsHandler.UnsubscribeToEvent("GP_LOSE", LoseScreen);
     }
 
     #endregion
@@ -68,6 +76,7 @@ public class UIGameHandler : MonoBehaviour
         }
     }
 
+    //Activa la pantalla de reanudar juego
     private void ResumeScreen()
     {
         if (_pauseScreen != null && _inGameScreen != null)
@@ -77,7 +86,8 @@ public class UIGameHandler : MonoBehaviour
         }
     }
 
-    public void EndOfLevelScreen()
+    //Levanta la pantalla de fin de nivel y apaga las demas
+    private void EndOfLevelScreen()
     {
         if (_levelCompleteScreen != null && _inGameScreen != null && _pauseScreen != null)
         {
@@ -88,9 +98,9 @@ public class UIGameHandler : MonoBehaviour
     }
 
     //Al perder, setea lose en true (para desactivar el botón de siguiente nivel) y activa EndOfLevelScreen 
-    public void LoseScreen()
+    private void LoseScreen()
     {
-        _lose = true;
+        Lose = true;
         EndOfLevelScreen();
     }
 

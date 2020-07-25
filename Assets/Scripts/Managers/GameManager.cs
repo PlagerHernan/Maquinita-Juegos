@@ -38,19 +38,19 @@ public class GameManager : Manager
         //Suscribe los eventos al manejador de eventos
         SubscribeEvents();
 
+        //Cargo los datos de usuario y los GameSettings
         LoadUserInfo();
         LoadSettingsInfo();
+
+        //La expresion que se encuentra a la derecha de la asignación es una comparación.
+        //Compara si la escena actual es la última. Si la es, da true; si no, da false.
+        _isLastScene = SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1;
     }
 
     //Metodo de Unity que se ejecuta una sola vez antes del primer Update
     private void Start()
     {
-        //La expresion que se encuentra a la derecha de la asignación es una comparación.
-        //Compara si la escena actual es la última. Si la es, da true; si no, da false.
-        _isLastScene = SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1;
-
         //Obtiene las configuraciones mismas de juego y setea las opciones de juego.
-
         _lastMusicState = _musicState;
         _lastSoundState = _soundState;
 
@@ -64,13 +64,13 @@ public class GameManager : Manager
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            EventsManager.TriggerEvent("GP_PAUSE");
+            EventsHandler.TriggerEvent("GP_PAUSE");
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    EventsHandler.TriggerEvent("GP_LEVELCOMPLETE");
+        //}
 
         RefreshGameTime();
     }
@@ -95,19 +95,19 @@ public class GameManager : Manager
     //Este metodo subscribe los metodos al manejador de eventos.
     private void SubscribeEvents()
     {
-        EventsManager.SubscribeToEvent("GP_RESUME", SaveSettingsInfo);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
-        EventsManager.SubscribeToEvent("GP_LOSE", LoseAttempt);
+        EventsHandler.SubscribeToEvent("GP_RESUME", SaveSettingsInfo);
+        EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
+        EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
+        EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+        EventsHandler.SubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     private void UnsubscribeEvents()
     {
-        EventsManager.UnsubscribeToEvent("GP_RESUME", SaveSettingsInfo);
-        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
-        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
-        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
-        EventsManager.UnsubscribeToEvent("GP_LOSE", LoseAttempt);
+        EventsHandler.UnsubscribeToEvent("GP_RESUME", SaveSettingsInfo);
+        EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
+        EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
+        EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+        EventsHandler.UnsubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     #endregion
 
@@ -155,20 +155,20 @@ public class GameManager : Manager
     //Metodos destinados a botones
     public void OnClickPause()
     {
-        EventsManager.TriggerEvent("GP_PAUSE");
+        EventsHandler.TriggerEvent("GP_PAUSE");
     }
     public void OnClickResume()
     {
-        EventsManager.TriggerEvent("GP_RESUME");
+        EventsHandler.TriggerEvent("GP_RESUME");
     }
 
     public void OnClickLevelComplete()
     {
-        EventsManager.TriggerEvent("GP_LEVELCOMPLETE");
+        EventsHandler.TriggerEvent("GP_LEVELCOMPLETE");
     }
     public void OnClickLose()
     {
-        EventsManager.TriggerEvent("GP_LOSE");
+        EventsHandler.TriggerEvent("GP_LOSE");
     }
     #endregion
 }

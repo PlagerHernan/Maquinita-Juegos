@@ -22,17 +22,21 @@ public class SFXHandler : MonoBehaviour
         _audioSource.mute = !_manager.SoundOn;
     }
 
+    //Metodo que hace el sonido de Click
     public void ClickSound()
     {
         if(_clickAudioClip != null)
             PlaySound(_clickAudioClip.name);
     }
+
+    //Reproduzco un sonido
     public void PlaySound(string name)
     {
         var clip = _soundManager.GetSound(name);
         _audioSource.PlayOneShot(clip);
     }
 
+    //Muteo el AudioSource
     public void Mute(bool state)
     {
         //Si mutear es falso, setea la propiedad en el manager a true (porque el sonido está en On) y desmutea el AudioSource

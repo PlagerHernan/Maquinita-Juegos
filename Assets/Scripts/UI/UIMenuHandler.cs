@@ -33,17 +33,17 @@ public class UIMenuHandler : MonoBehaviour
     #region Subscripcion y desuscripcion de eventos
     private void SubscribeEvents()
     {
-        EventsManager.SubscribeToEvent("GP_MAINMENU", MenuScreen);
-        EventsManager.SubscribeToEvent("GP_SETTINGS", SettingsScreen);
-        EventsManager.SubscribeToEvent("GP_CREDITS", CreditsScreen);
-        EventsManager.SubscribeToEvent("GP_LEVELSELECT", LevelSelectScreen);
+        EventsHandler.SubscribeToEvent("GP_MAINMENU", MenuScreen);
+        EventsHandler.SubscribeToEvent("GP_SETTINGS", SettingsScreen);
+        EventsHandler.SubscribeToEvent("GP_CREDITS", CreditsScreen);
+        EventsHandler.SubscribeToEvent("GP_LEVELSELECT", LevelSelectScreen);
     }
     private void UnsubscribeEvents()
     {
-        EventsManager.UnsubscribeToEvent("GP_MAINMENU", MenuScreen);
-        EventsManager.UnsubscribeToEvent("GP_SETTINGS", SettingsScreen);
-        EventsManager.UnsubscribeToEvent("GP_CREDITS", CreditsScreen);
-        EventsManager.UnsubscribeToEvent("GP_LEVELSELECT", LevelSelectScreen);
+        EventsHandler.UnsubscribeToEvent("GP_MAINMENU", MenuScreen);
+        EventsHandler.UnsubscribeToEvent("GP_SETTINGS", SettingsScreen);
+        EventsHandler.UnsubscribeToEvent("GP_CREDITS", CreditsScreen);
+        EventsHandler.UnsubscribeToEvent("GP_LEVELSELECT", LevelSelectScreen);
     }
 
     #endregion

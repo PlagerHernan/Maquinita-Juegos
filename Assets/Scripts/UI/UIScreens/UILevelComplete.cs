@@ -27,6 +27,8 @@ public class UILevelComplete : MonoBehaviour
         var timeSpan = TimeSpan.FromSeconds((int)_gameManager.GameTime);
         _scoreText.text = string.Format("{0:00}:{1:00}", timeSpan.TotalMinutes, timeSpan.Seconds);
 
+        Debug.Log(_UIGameHandler.IsLastScene);
+
         //Si es la última escena, desactiva el botón de siguiente nivel. Si no, lo activa.
         if (_UIGameHandler.IsLastScene || _UIGameHandler.Lose)
             _nextLevelButton.gameObject.SetActive(false);
