@@ -1,1 +1,18 @@
-{"list":[{"ID_Attempt":1,"current_Game_Level":3,"experience_Points_per_Attempt":37.0,"level_Completed":true}]}
+{
+    "list": [
+        {
+            "level_Completed": false,
+            "game_Level": 1,
+            "experience_Points_per_Attempt": 2.0,
+            "current_Game_Level": 3,
+            "current_User_Level_In_The_Game": 2,
+            "amount_of_Hits": 1,
+            "amount_of_Errors": 1,
+            "attempt_Starting_Point": "{\"value\":132401279734991490}",
+            "attempt_End": "{\"value\":132401279829856916}",
+            "attempt_Time": 9.3712158203125,
+            "crashed": true,
+            "where_the_Game_Stopped": 1
+        }
+    ]
+}

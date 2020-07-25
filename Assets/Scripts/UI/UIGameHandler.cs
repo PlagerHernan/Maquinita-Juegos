@@ -15,12 +15,17 @@ public class UIGameHandler : MonoBehaviour
     [SerializeField] GameObject _levelCompleteScreen;
 
     Manager _manager;
+    bool _isLastScene; public bool IsLastScene { get => _isLastScene; }
+    bool _lose = false; public bool Lose { get => _lose; }
+
+
     #endregion
 
     #region Funciones de Unity
 
     private void Awake()
     {
+        _manager = FindObjectOfType<Manager>();
         //Suscribo eventos al iniciar el nivel.
         SubscribeEvents();
     }
@@ -38,14 +43,14 @@ public class UIGameHandler : MonoBehaviour
     {
         EventsManager.SubscribeToEvent("GP_PAUSE", PauseScreen);
         EventsManager.SubscribeToEvent("GP_RESUME", ResumeScreen);
-        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+        EventsManager.SubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
         EventsManager.SubscribeToEvent("GP_LOSE", LoseScreen);
     }
     private void UnsubscribeEvents()
     {
         EventsManager.UnsubscribeToEvent("GP_PAUSE", PauseScreen);
         EventsManager.UnsubscribeToEvent("GP_RESUME", ResumeScreen);
-        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompleteScreen);
+        EventsManager.UnsubscribeToEvent("GP_LEVELCOMPLETE", EndOfLevelScreen);
         EventsManager.UnsubscribeToEvent("GP_LOSE", LoseScreen);
     }
 
@@ -72,7 +77,7 @@ public class UIGameHandler : MonoBehaviour
         }
     }
 
-    public void LevelCompleteScreen()
+    public void EndOfLevelScreen()
     {
         if (_levelCompleteScreen != null && _inGameScreen != null && _pauseScreen != null)
         {
@@ -82,12 +87,11 @@ public class UIGameHandler : MonoBehaviour
         }
     }
 
-    //Al perder, activa LevelCompleteScreen pero sin el botón de siguiente nivel (simula ser la última escena) 
+    //Al perder, setea lose en true (para desactivar el botón de siguiente nivel) y activa EndOfLevelScreen 
     public void LoseScreen()
     {
-        _manager = FindObjectOfType<Manager>();
-        _manager.IsLastScene = true;
-        LevelCompleteScreen();
+        _lose = true;
+        EndOfLevelScreen();
     }
 
     #endregion

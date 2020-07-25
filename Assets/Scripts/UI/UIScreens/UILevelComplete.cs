@@ -8,6 +8,7 @@ public class UILevelComplete : MonoBehaviour
     [SerializeField] Text _scoreText;
 
     GameManager _gameManager;
+    UIGameHandler _UIGameHandler;
 
     #region Métodos de Unity
 
@@ -17,12 +18,17 @@ public class UILevelComplete : MonoBehaviour
         if(_gameManager == null)
             _gameManager = FindObjectOfType<GameManager>();
 
+        if (_UIGameHandler == null)
+        {
+            _UIGameHandler = FindObjectOfType<UIGameHandler>();
+        }
+
         //Obtiene el tiempo del juego y le aplica el formato de mm:ss.
         var timeSpan = TimeSpan.FromSeconds((int)_gameManager.GameTime);
         _scoreText.text = string.Format("{0:00}:{1:00}", timeSpan.TotalMinutes, timeSpan.Seconds);
 
         //Si es la última escena, desactiva el botón de siguiente nivel. Si no, lo activa.
-        if (_gameManager.IsLastScene)
+        if (_UIGameHandler.IsLastScene || _UIGameHandler.Lose)
             _nextLevelButton.gameObject.SetActive(false);
         else
             _nextLevelButton.gameObject.SetActive(true);
