@@ -22,6 +22,7 @@ public class Manager : MonoBehaviour
     //propiedades de Settings
     public bool MusicOn { get => _musicState; set => _musicState = value; }
     public bool SoundOn { get => _soundState; set => _soundState = value; }
+    public Language Language { get => _gameSettings.language; set => _gameSettings.language = value; }
 
     //propiedades de User
     public string UserName { get => _user.name; set => _user.name = value; }
