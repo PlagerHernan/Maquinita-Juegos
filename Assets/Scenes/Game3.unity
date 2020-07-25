@@ -363,6 +363,11 @@ PrefabInstance:
       propertyPath: _menuSceneIndex
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7701353694686887707, guid: d136b1922de70324981429634487de50,
+        type: 3}
+      propertyPath: _currentSceneIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7701353695032986947, guid: d136b1922de70324981429634487de50,
         type: 3}
       propertyPath: m_Name

@@ -7,8 +7,8 @@ public class GameManager : Manager
     //--Header es un atributo que imprime un encabezado en el inspector (ver inspector)
     //--SerializeField hace que una variable privada sea visible desde el inspector. Esto es para evitar utilizar variables públicas.
 
-    [Header("Menu Scene")]
-    [SerializeField] int _menuSceneIndex;
+    [Header("Current Scene")]
+    [SerializeField] int _currentSceneIndex;
 
     private float _baseTime;
     private float _gameTime; public float GameTime { get => _gameTime; }
@@ -24,10 +24,10 @@ public class GameManager : Manager
 
     //Metodo propio de Unity que se ejecuta en modo editor cada vez que se hacen cambios en las variables del inspector.
     //En este caso evita que el index de escena que queremos que ejecute no sea menor a 0 ni mayor que la cantidad de escenas cargadas en el buildIndex
-    /* private void OnValidate()
+    private void OnValidate()
     {
-        _menuSceneIndex = Mathf.Clamp(_menuSceneIndex, 0, SceneManager.sceneCount);
-    } */
+        _currentSceneIndex = Mathf.Clamp(_currentSceneIndex, 0, SceneManager.sceneCountInBuildSettings-1);
+    }
 
     //Metodo de Unity que se ejecuta MIENTRAS SE INICIALIZAN LOS COMPONENTES.
     //Se ejecuta antes del Start y se utiliza mucho para establecer las referencias a otros scripts (FindObjectOfType, GetComponent, etc)
@@ -86,7 +86,7 @@ public class GameManager : Manager
     {
         base.OnApplicationQuit();
         //Agrega nuevo Attempt con crash en true. Descomentar antes de buildear juego (al trabajar es molesto)
-        //NewAttempt(false, true);
+        AddNewAttempt(false, true);
     }
 
     #endregion
@@ -130,8 +130,8 @@ public class GameManager : Manager
         newAttempt.crashed = crash; //si la app crasheó o no
 
         //redundante?
-        newAttempt.where_the_Game_Stopped = _menuSceneIndex; ////escena en la cual crasheó
-        newAttempt.game_Level = _menuSceneIndex; //el nivel en el cual se desarrolló la partida 
+        newAttempt.where_the_Game_Stopped = _currentSceneIndex; ////escena en la cual crasheó
+        newAttempt.game_Level = _currentSceneIndex; //el nivel en el cual se desarrolló la partida 
 
         newAttempt.level_Completed = result; //derrota o victoria de la partida
         newAttempt.current_Game_Level = UserLevel; //último nivel desbloqueado por el usuario

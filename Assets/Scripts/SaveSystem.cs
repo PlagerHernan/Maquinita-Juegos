@@ -18,9 +18,9 @@ public class SaveSystem : MonoBehaviour
 
     private void Awake() 
     {
-        /* _userFilePath = Application.dataPath + "/User.json";
+        _userFilePath = Application.dataPath + "/User.json";
         _gameSettingsFilePath = Application.dataPath + "/GameSettings.json";
-        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json"; */
+        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
     }
 
     #region Json Getters
@@ -28,7 +28,7 @@ public class SaveSystem : MonoBehaviour
     //Metodo para obtener el JSON de usuario
     public User GetUser()
     {
-        _userFilePath = Application.dataPath + "/User.json";
+        //_userFilePath = Application.dataPath + "/User.json";
 
         //si el archivo no existe, crea uno nuevo con valores por defecto
         if (!File.Exists(_userFilePath))
@@ -46,7 +46,7 @@ public class SaveSystem : MonoBehaviour
 
     public ListAttempts GetListAttempts()
     {
-        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
+        //_listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
 
         //si el archivo no existe, crea uno nuevo
         if (!File.Exists(_listAttemptsFilePath))
@@ -66,7 +66,7 @@ public class SaveSystem : MonoBehaviour
     public GameSettings GetGameSettings()
     {
         // Seteo el path del archivo
-        _gameSettingsFilePath = Application.dataPath + "/GameSettings.json";
+        //_gameSettingsFilePath = Application.dataPath + "/GameSettings.json";
 
         //Chequeo si el archivo exite, si existe lo crea, sino sigue de largo
         if (!File.Exists(_gameSettingsFilePath))
@@ -146,7 +146,7 @@ public class SaveSystem : MonoBehaviour
 
     public void DeleteListAttempts()
     {
-        _listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
+        //_listAttemptsFilePath = Application.dataPath + "/ListAttempts.json";
 
         //si el archivo existe, lo elimina
         if (File.Exists(_listAttemptsFilePath))

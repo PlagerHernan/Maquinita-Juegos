@@ -7,14 +7,16 @@ public class MenuManager : Manager
     override protected void Awake()
     {
         base.Awake();
-        LoadSettingsInfo();
-        LoadUserInfo();
+        
+        
     }
 
     private void Start() 
     {
-        _gameSettings = _saveSystem.GetGameSettings(); 
-        _user = _saveSystem.GetUser();    
+        //_gameSettings = _saveSystem.GetGameSettings(); 
+        LoadSettingsInfo();
+        LoadUserInfo();
+        //_user = _saveSystem.GetUser();    
     }
 
     #region OnClickEvents
