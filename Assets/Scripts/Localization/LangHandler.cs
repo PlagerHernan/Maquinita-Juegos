@@ -65,9 +65,10 @@ public class LangHandler : MonoBehaviour
     void Awake()
     {
         _manager = FindObjectOfType<Manager>();
-
         if (_manager != null)
+        {
             _selectedLanguage = _manager.Language;
+        }
 
         if(_savedCodex == null)//Si no tengo textos cargados en memoria
         {
@@ -77,6 +78,7 @@ public class LangHandler : MonoBehaviour
             if(_localCSVFileName != null && File.Exists(Application.dataPath + docFormat))
             {
                 _languageManager = LanguageExtractor.ExtractTexts(_localCSVFileName, File.ReadAllText(Application.dataPath + docFormat));
+                _savedCodex = _languageManager;
             }
             //Sino intento descargandolo de internet
             else if (_externalUrl != "")
