@@ -10,11 +10,11 @@ public class GameManager : Manager
     [Header("Current Scene")]
     [SerializeField] int _currentSceneIndex;
 
-    private float _baseTime;
-    private float _gameTime; public float GameTime { get => _gameTime; }
+    private int _baseTime;
+    private int _gameTime; public int GameTime { get => _gameTime; }
 
     //variables y propiedades de Attempt
-    float _expPointsAttempt; public float ExpPointsAttempt { get => _expPointsAttempt; set => _expPointsAttempt = value; }
+    int _expPointsAttempt; public int ExpPointsAttempt { get => _expPointsAttempt; set => _expPointsAttempt = value; }
     private int _experienceLevel; public int ExperienceLevel { get => _experienceLevel; set => _experienceLevel = value; }
     int _hitsAttempt; public int HitsAttempt { get => _hitsAttempt; set => _hitsAttempt = value; }
     int _errorsAttempt; public int ErrorsAttempt { get => _errorsAttempt; set => _errorsAttempt = value; }
@@ -54,7 +54,7 @@ public class GameManager : Manager
         _lastMusicState = _musicState;
         _lastSoundState = _soundState;
 
-        _baseTime = Time.time;
+        _baseTime = (int)Time.time;
 
         //Setea fecha y hora de inicio de la partida
         _attempt_Starting_Point = JsonUtility.ToJson((JsonDateTime)DateTime.Now);
@@ -119,7 +119,7 @@ public class GameManager : Manager
     //=============== PRIVATE METHODS =======================
 
     //Actualiza el tiempo de juego
-    private void RefreshGameTime() => _gameTime = Time.time - _baseTime;
+    private void RefreshGameTime() => _gameTime = (int)Time.time - _baseTime;
 
     private void AddNewAttempt(bool result, bool crash)
     {
@@ -141,7 +141,7 @@ public class GameManager : Manager
         newAttempt.amount_of_Errors = ErrorsAttempt; 
         newAttempt.attempt_Starting_Point = Attempt_Starting_Point;
         newAttempt.attempt_End = JsonUtility.ToJson((JsonDateTime)DateTime.Now);
-        newAttempt.attempt_Time = _gameTime;
+        newAttempt.attempt_Time = (int)_gameTime;
 
         _listAttempts.list.Add(newAttempt);
         _saveSystem.SetListAttempts(_listAttempts);

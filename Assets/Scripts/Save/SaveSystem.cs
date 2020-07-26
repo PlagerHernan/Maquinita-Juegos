@@ -130,7 +130,7 @@ public class SaveSystem : MonoBehaviour
         var user = new User();
         user.name = "Pepe";
         user.currentLevel = 01;
-        user.experiencePoints = 0f;
+        user.experiencePoints = 0;
 
         return user;
     }
@@ -162,7 +162,7 @@ public struct User
 {
     public string name;
     public int currentLevel;
-    public float experiencePoints;
+    public int experiencePoints;
 
     public override string ToString()
     {
@@ -204,14 +204,14 @@ public struct Attempt
     //public int ID_User;
     public bool level_Completed; //result
     public int game_Level; //el nivel que jugó ahora -> a futuro, no siempre la escena va a corresponder a un nivel, pero en este caso sí 
-    public float experience_Points_per_Attempt; //puntos de exp de la partida
+    public int experience_Points_per_Attempt; //puntos de exp de la partida
     public int current_Game_Level; //el último nivel desbloqueado
     public int current_User_Level_In_The_Game; //nivel de experiencia de usuario -> cada 10 puntos cambia de nivel
     public int amount_of_Hits; //hacer metodo estatico para sumar 
     public int amount_of_Errors; //hacer metodo estatico para sumar
     public string attempt_Starting_Point; //fecha y hora de inicio de la partida
     public string attempt_End; //fecha y hora de fin de la partida
-    public float attempt_Time; //(agregado, no estaba en la tabla) duración de la partida 
+    public int attempt_Time; //(agregado, no estaba en la tabla) duración de la partida 
     public bool crashed; //(agregado, no estaba en la tabla) si la app crasheó o no
     public int where_the_Game_Stopped; //escena en la cual crasheó
     

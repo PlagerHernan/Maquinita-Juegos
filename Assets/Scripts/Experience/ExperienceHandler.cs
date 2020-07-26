@@ -5,10 +5,10 @@ using UnityEngine;
 public class ExperienceHandler : MonoBehaviour
 {
     GameManager _gameManager;
-    float _expPoints, _initialExpPoints = 0;
+    int _expPoints, _initialExpPoints = 0;
 
-    public float ExpPoints { get => _expPoints; }
-    public float InitialExpPoints { get => _initialExpPoints; }
+    public int ExpPoints { get => _expPoints; }
+    public int InitialExpPoints { get => _initialExpPoints; }
 
     private void Awake()
     {

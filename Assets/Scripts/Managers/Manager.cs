@@ -27,7 +27,7 @@ public class Manager : MonoBehaviour
     //propiedades de User
     public string UserName { get => _user.name; set => _user.name = value; }
     public int UserLevel { get => _user.currentLevel;}
-    public float ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
+    public int ExperiencePoints { get => _user.experiencePoints; set => _user.experiencePoints = value; }
 
     protected bool _isLastScene; public bool IsLastScene { get => _isLastScene; set => _isLastScene = value; }
 
