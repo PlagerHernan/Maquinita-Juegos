@@ -1632,7 +1632,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _externalUrl: https://docs.google.com/spreadsheets/d/1M7RDaoYPXnVhof8Cp2SRIU0mcMyqk4kGBuTAphfNTFU/edit?usp=sharing
-  _localCSVFileName: 
+  _localCSVFileName: LocalizacionMaquinita.csv
+  _textEncoding: 3
 --- !u!1 &418891876
 GameObject:
   m_ObjectHideFlags: 0

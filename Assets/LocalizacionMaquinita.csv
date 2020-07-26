@@ -1,30 +1,30 @@
 ID,English,Spanish,Portuguese
-menu_generic_backbutton,Back,Atr?s,Retorna
-menu_menu_title,Little Machine,Maquinita,Pequena M?quina
-menu_menu_settings,Settings,Configuraci?n,Configura??o
-menu_menu_levels,Levels,Niveles,N?veis
-menu_menu_username,User: ,Usuario: ,Usu?rio: 
+menu_generic_backbutton,Back,Atrás,Retorna
+menu_menu_title,"Little, Machine",Maquinita,Pequena Máquina
+menu_menu_settings,Settings,Configuración,Configuração
+menu_menu_levels,Levels,Niveles,Níveis
+menu_menu_username,User: ,Usuario: ,Usuário: 
 menu_menu_exppoints,Exp: ,Exp: ,Exp:
-menu_menu_currlevel,Level: ,Nivel: ,N?vel: 
+menu_menu_currlevel,Level: ,Nivel: ,Nível: 
 menu_menu_exit,Exit,Salir,Sair
-menu_settings_music,Music,M?sica,M?sica
+menu_settings_music,Music,Música,Música
 menu_settings_sound,Sound,Sonido,Som
-menu_settings_credits,Credits,Cr?ditos,Cr?ditos
-menu_settings_lang-en,English,Ingl?s,Ingl?s
-menu_settings_lang-es,Spanish,Espa?ol,Espanhol
-menu_settings_lang-pr,Portuguese,Portugu?s,Portugu?s
-menu_levelselect_title,Levels,Niveles,N?veis
-menu_levelselect_level1,Level 1,Nivel 1,N?vel 1
-menu_levelselect_level2,Level 2,Nivel 2,N?vel 2
-menu_levelselect_level3,Level 3,Nivel 3,N?vel 3
+menu_settings_credits,Credits,Créditos,Créditos
+menu_settings_lang-en,English,Inglés,Inglês
+menu_settings_lang-es,Spanish,Español,Espanhol
+menu_settings_lang-pr,Portuguese,Portugués,Português
+menu_levelselect_title,Levels,Niveles,Níveis
+menu_levelselect_level1,Level 1,Nivel 1,Nível 1
+menu_levelselect_level2,Level 2,Nivel 2,Nível 2
+menu_levelselect_level3,Level 3,Nivel 3,Nível 3
 game_ingame_exp,Exp.:,Exp.:,Exp.:
 game_pause_resume,Resume,Reanudar,Retomar
 game_pause_restart,Restart,Reiniciar,Reiniciar
-game_pause_menu,Main Menu,Men? Principal,Menu Principal
-game_levelcomplete_relics,Relics,Reliquias,Rel?quias
-game_levelcomplete_exp,Experience,Experiencia,Experi?ncia
-game_levelcomplete_title,Level Stats,Estad?sticas Nivel,Estat?sticas de n?vel
+game_pause_menu,Main Menu,Menú Principal,Menu Principal
+game_levelcomplete_relics,Relics,Reliquias,Relíquias
+game_levelcomplete_exp,Experience,Experiencia,Experiência
+game_levelcomplete_title,Level Stats,Estadísticas Nivel,Estatísticas de nível
 game_levelcomplete_leveltime,Time Level,Tiempo de juego,Tempo de jogo
-game_levelcomplete_menubtn,Back to Menu,Volver al Men?,Voltar ao menu
-game_levelcomplete_restartbtn,Restart Level,Reiniciar Nivel,Recome?ar n?vel
-game_levelcomplete_nextbtn,Next Level,Siguiente Nivel,Pr?ximo n?vel
+game_levelcomplete_menubtn,Back to Menu,Volver al Menú,Voltar ao menu
+game_levelcomplete_restartbtn,Restart Level,Reiniciar Nivel,Recomeçar nível
+game_levelcomplete_nextbtn,Next Level,Siguiente Nivel,Próximo nível

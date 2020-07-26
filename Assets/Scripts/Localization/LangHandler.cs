@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Text;
 
 //Enums Idiomas
 public enum Language
@@ -13,6 +14,15 @@ public enum Language
     Portuguese
 }
 
+enum TextEncoding
+{
+    ASCII,
+    Unicode,
+    UTF7,
+    UTF8,
+    UTF32
+}
+
 public class LangHandler : MonoBehaviour
 {
     //Url para saber desde donde descargar nuestro documento
@@ -20,6 +30,9 @@ public class LangHandler : MonoBehaviour
     [SerializeField] string _externalUrl;
     [Header("CSV file name (with the .csv extension)")]
     [SerializeField] string _localCSVFileName;
+    //Tipo de encoder que se utilizará para crear el archivo local
+    [Header("CSV Encoding")]
+    [SerializeField] TextEncoding _textEncoding = TextEncoding.UTF8;
 
     //Enum de idiomas.
     private Language _selectedLanguage;
@@ -114,7 +127,7 @@ public class LangHandler : MonoBehaviour
         //Guardo el archivo de forma local.
         if(_localCSVFileName != "")
         {
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(www.downloadHandler.text);
+            var data = www.downloadHandler.text;
             ReWriteText(data);
         }
 
@@ -126,11 +139,14 @@ public class LangHandler : MonoBehaviour
     /// <summary>
     /// Funcion para guardar el documento en disco y tener un backup
     /// </summary>
-    public void ReWriteText(byte[] newText)
+    public void ReWriteText(string newText)
     {
-        var docFormat       = string.Format("/{0}", _localCSVFileName);
-        var docExtension    = _localCSVFileName.Split('.')[1];
+        var docFormat = string.Format("/{0}", _localCSVFileName);
+        var docExtension = _localCSVFileName.Split('.')[1];
         var docFormatBackup = string.Format("/{0}_backup{1}", _localCSVFileName, docExtension);
+
+        var encoding = GetEncoding(_textEncoding);
+        var newTextInBytes = encoding.GetBytes(newText);
 
         if (File.Exists(Application.dataPath + docFormat))
         {
@@ -138,11 +154,11 @@ public class LangHandler : MonoBehaviour
                 File.Delete(Application.dataPath + docFormatBackup);
             File.Copy(Application.dataPath + docFormat, Application.dataPath + docFormatBackup);
             File.Delete(Application.dataPath + docFormat);
-            File.WriteAllBytes(Application.dataPath + docFormat, newText);
+            File.WriteAllBytes(Application.dataPath + docFormat, newTextInBytes);
         }
         else
         {
-            File.WriteAllBytes(Application.dataPath + docFormat, newText);
+            File.WriteAllBytes(Application.dataPath + docFormat, newTextInBytes);
         }
 
     }
@@ -151,5 +167,34 @@ public class LangHandler : MonoBehaviour
     private void Start()
     {
         _selectedLanguage = _manager.Language;
+    }
+
+    Encoding GetEncoding(TextEncoding desiredEnconding)
+    {
+        Encoding encoding;
+
+        switch (desiredEnconding)
+        {
+            case TextEncoding.ASCII:
+                encoding = Encoding.ASCII;
+                break;
+            case TextEncoding.Unicode:
+                encoding = Encoding.Unicode;
+                break;
+            case TextEncoding.UTF7:
+                encoding = Encoding.UTF7;
+                break;
+            case TextEncoding.UTF8:
+                encoding = Encoding.UTF8;
+                break;
+            case TextEncoding.UTF32:
+                encoding = Encoding.UTF32;
+                break;
+            default:
+                encoding = Encoding.UTF8;
+                break;
+        }
+
+        return encoding;
     }
 }
