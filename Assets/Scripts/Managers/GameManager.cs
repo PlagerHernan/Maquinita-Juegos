@@ -96,17 +96,23 @@ public class GameManager : Manager
     private void SubscribeEvents()
     {
         EventsHandler.SubscribeToEvent("GP_RESUME", SaveSettingsInfo);
+
         EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
         EventsHandler.SubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+
+        EventsHandler.SubscribeToEvent("GP_LOSE", SaveUserInfo);
         EventsHandler.SubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     private void UnsubscribeEvents()
     {
         EventsHandler.UnsubscribeToEvent("GP_RESUME", SaveSettingsInfo);
+
         EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", UnlockLevel);
         EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", SaveUserInfo);
         EventsHandler.UnsubscribeToEvent("GP_LEVELCOMPLETE", LevelCompletedAttempt);
+
+        EventsHandler.UnsubscribeToEvent("GP_LOSE", SaveUserInfo);
         EventsHandler.UnsubscribeToEvent("GP_LOSE", LoseAttempt);
     }
     #endregion
